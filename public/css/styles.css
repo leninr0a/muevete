@@ -1,0 +1,644 @@
+/* green: #1cbc90; */
+/* dark-blue : #374258; */
+/* titles: #3fb4b9; */
+
+*{
+	font-family: 'Raleway';
+}
+.header{
+	background:#2e9afe;
+}
+.menu{
+	list-style: none;
+}
+
+
+.menu-row{
+	padding-top:0.5em;
+	padding-bottom:0.5em;
+}
+
+.menu li{
+	display:inline-block;
+	padding:0.5em 2em;
+	font-weight: bolder;
+	color:#fff;
+	margin-top:1.5em;
+}
+
+
+.hero{
+	background: url('http://i.huffpost.com/gen/1617036/images/o-COUPLE-DRIVING-AWAY-IN-A-CAR-facebook.jpg');
+	background-size:cover;
+	padding:15em 0 0 0;
+	background-attachment: fixed;
+}
+
+.header-subtitle{
+	color:#fff;
+	font-size:3em;
+
+}
+.pac-container:after {
+    /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
+
+    background-image: none !important;
+    height: 0px;
+}
+
+.input-group.date{
+	background: transparent;
+	border:none;
+}
+.form-container{
+	color:#fff;
+	background: rgba(46, 154, 254, 0.83);
+	padding:2em;
+	margin-top:14em;
+}
+
+.col-form{
+	padding:0em 0em;
+}
+
+.input-text{
+	background:transparent;
+	border:none;
+	border-bottom:1px solid #eee;
+	margin-bottom:2em;
+	width:70%;
+	margin:0 auto;
+	display:block;
+}
+
+.input-container{
+	display:inline-block;
+	width:30%;
+}
+
+
+.green{
+	color:#31ce31;
+}
+
+.red{
+	color:red;
+}
+
+.button-social-facebook,.button-social-twitter{
+	background:#3b5998;
+	color:#fff;
+	padding:0.5em 1.5em;
+	display:inline-block;
+	text-transform: uppercase;
+	font-size:0.8em;
+	border-radius:0.3em;
+	cursor:pointer;
+}
+
+.button-social-twitter{
+	background:#1da1f2;
+}
+
+.button-social-facebook i{
+	margin-right: 0.5em;
+}
+
+.row-social-buttons{
+	margin-bottom:1em;
+}
+.yellow{
+	color:yellow;
+}
+.blue{
+	color:blue;
+}
+.red{
+	color:red;
+}
+
+.btn-search{
+	background:#fff;
+	border:none;
+	margin:0 auto;
+	display:inline-block;
+	padding:0.5em 1em;
+	color:#333;
+	border-radius:10px;
+}
+
+
+.icon-step{
+	/*opacity: 0.5;*/
+	background:transparent;
+	display:table;
+	text-align: center;
+	width:7.5em;
+	height:7.5em;
+	border-radius: 100%;
+	margin:0 auto;
+
+}
+
+.col-logo{
+	padding-top:1.6em;
+}
+
+.icon-step i{
+	color:rgba(255,255,255,1);
+	border-radius: 100%;
+	vertical-align: middle;
+	display:table-cell;
+	border:2px solid rgba(255, 255, 255, 0.46);
+}
+
+.icon-step-step-one{
+	background: #fffa15; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient( #fffa15 , #d2d10d); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#fffa15 , #d2d10d); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient( #fffa15 , #d2d10d); /* For Firefox 3.6 to 15 */
+	background:linear-gradient( #fffa15 , #d2d10d);
+}
+.icon-step-step-two{
+	background: #fffa15; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient( #fffa00 , #2c82d3); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient( #fffa00 , #2c82d3);/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient( #fffa00 , #2c82d3); /* For Firefox 3.6 to 15 */
+	background:linear-gradient( #fffa00 , #2c82d3);
+}
+.icon-step-step-three{
+	background: #3f93e0; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient( #3f93e0 , #4295e0); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient( #3f93e0 , #4295e0); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient( #3f93e0 , #4295e0); /* For Firefox 3.6 to 15 */
+	background:linear-gradient( #3f93e0 , #4295e0);
+}
+.icon-step-step-four{
+	background: #fffa15; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient( #4194e0 , #fb535c); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient( #4194e0 , #fb535c); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient( #4194e0 , #fb535c); /* For Firefox 3.6 to 15 */
+	background:linear-gradient( #4194e0 , #fb535c);
+}
+.icon-step-step-five{
+	background: #fffa15; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient( #da1e2d , #df4226);/* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient( #da1e2d , #df4226);/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient( #da1e2d , #df4226);/* For Firefox 3.6 to 15 */
+	background:linear-gradient( #da1e2d , #df4226);
+
+}
+
+.steps{
+	padding-top:4.5em;
+	background:#2e9afe;
+	color:#fff;
+	padding-bottom:4.5em;
+}
+
+.steps a{
+	color:yellow;
+	font-weight: bolder;
+}
+
+.mini-hr{
+	width:5%;
+	margin:1em auto 3.5em auto;
+	border-color:#333;
+	display:block;
+}
+
+.col-reasons{
+	padding:2em 1em;
+}
+
+.devices{
+	width:50%;
+	height:auto;
+	margin: 0 auto;
+}
+
+.device-section{
+	padding-top:3em;
+	background:#fff;
+}
+
+.last-trips{	
+	padding:2em;
+}
+
+.ico-reason{
+	color:#2e9afe;
+}
+
+.responsive{
+	background: url('../images/low-poly-texture-min.png');
+	background-size:cover;
+}
+
+.bg-color-1{
+	background: rgba(255,255,255,0.8);
+	padding:4em 0;
+}
+
+.menu-link{
+	color:#fff;
+	text-decoration: none;
+
+}
+
+.menu-link:hover{
+	color:#fff;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+html{
+	height:100%;
+}
+
+body{
+	height: 100%;
+	background:#fff;
+}
+
+form{
+	margin-bottom:0;
+}
+
+.contenido{
+	position:relative;
+	height:auto !important; /* real browsers */
+	height:100%;
+	min-height: 100%;
+	padding-bottom:5em;
+
+}
+
+/* Footer */
+footer{
+	position: absolute;
+	bottom:0;
+	width:100%;
+	background:#333;
+	color:#eee;
+	padding:1.5em 0;
+}
+/* General sizing */
+ul.dropdown-lr {
+  width: 250px;
+
+
+}
+
+.dropdown-lr hr{
+	margin:5px 0;
+}
+
+ul.dropdown-lr li{
+	font-weight:lighter;
+}
+ul.dropdown-lr li input{
+	
+}
+
+ul.dropdown-lr .input-group{
+	margin-bottom:0.5em;
+}
+
+.fa-log-in{
+	width:0.5em;
+	height:auto;
+}
+
+.btn-log-in{
+	width:100%;
+	padding:0.5em 0;
+	background:#2e9afe;
+	border:none;
+	border-radius:4px;
+}
+
+
+
+
+/* mobile fix */
+@media (max-width: 768px) {
+	.dropdown-lr h3 {
+		color: #eee;
+	}
+	.dropdown-lr label {
+		color: #eee;
+	}
+}
+
+
+/* Register */
+
+
+
+.cedula-field-col{
+	padding-left:0;
+}
+.register-page{
+	background:url('../images/header-img.jpg');
+	background-size:cover;
+}
+.btn-facebook-login{
+	display:inline-block;
+	margin: 0 auto;
+}
+
+.row-register-form{
+	margin-bottom:1em;
+}
+
+.container-register{
+	width:50%;
+	background:#fff;
+	border:1px solid #eee;
+	padding:1.5em 5em;
+	border-radius: 15px;
+}
+
+.btn-registrarme{
+	background:#2e9afe;
+	color:#fff;
+	border:none;
+	width:100%;
+	padding:0.8em 1.3em;
+}
+
+
+.btn-registrarme:hover{
+	color:#fff;
+	font-weight: bolder;
+}
+
+.bg-black{
+	padding:7em 0;
+	background:rgba(0,0,0,0.7);
+	height:100%;
+}
+
+.header-register{
+	margin-bottom:1em;
+}
+
+
+/* Log in Page */
+.btn-log-in-page{
+	width:40%;
+	padding:0.5em 0;
+	background:#2e9afe;
+	border:none;
+	border-radius:4px;
+	color:#fff;
+}
+
+.panel-log-in{
+	margin-top:10%;
+}
+
+/*Como funciona*/
+
+.container-publica{
+	background:url('../images/header-img.jpg');
+	background-size:cover;
+}
+.container-publish{
+
+	padding:5em 0;
+
+}
+.col-step-text{
+	padding-top:2em;
+}
+
+.row-step{
+	margin-top:1em;
+	
+}
+
+.profile-col-left{
+	padding:2em;
+}
+
+.container-como-funciona{
+	padding:2em 0em 5em 2em;
+}
+
+.safety{
+	padding-top:2em;
+	background:#4eadaf;
+	color:#fff;
+}
+
+.mini-hr-white{
+	border-color:#fff;
+}
+
+.number{
+	display:table;
+	background:#4eadaf;
+	color:#fff;
+	width:1em;
+	height:1em;
+	border-radius: 100%;
+	margin-right:0.5em;
+	text-align: center;
+	float:left;
+}
+
+.number-content{
+	display:table-cell;
+	vertical-align: middle;
+	font-size:0.5em;
+	font-family: 'Arial';
+}
+
+.container-form-publica{
+	border:1px solid #eee;
+	padding:3em;
+	border-radius: 10px;
+	background: #fff;
+}
+
+.container-form-publica hr{
+	margin-top:40px;
+}
+
+.btn-continue{
+	display:inline-block;
+	padding:0.5em 1em;
+	color:#fff;
+	background:#4eadaf;
+}
+
+.bar{
+	height:0.5em;
+	display:block;
+	width:100%;
+	background:#eee;
+}
+.bar-active{
+	background:#4eadaf;
+}
+
+.row-publicar-buttons{
+	margin-top:2em;
+}
+
+.btn-publicar{
+	background:#2e9afe;
+	color:#fff;
+}
+
+.btn-publicar:hover,.btn-publicar:active,.btn-continue:hover,.btn-continue:active{
+	color:#fff;
+}
+
+
+/* Profile page */
+.profile-img{
+	border-radius: 100%;
+	display:block;
+	width:10em;
+	margin:0 auto;
+	height:auto;
+}
+
+.menu-profile-option{
+	border:1px solid #eee;
+	padding-left:2em;
+	padding-top:1em;
+	padding-bottom:1em;
+	border-right:0.5em solid black;
+}
+
+.black{
+	color:#000;
+}
+.profile-section{
+	background: #f3f3f3;
+	min-height: 100vh;
+}
+.menu-profile-option:hover{
+	background:#fbf9f9;
+	cursor: pointer;
+}
+
+.menu-profile-option-active,.menu-profile-option-active:hover{
+	background: #fff;
+	border-right:0.5em solid #2e9afe;
+}
+
+.menu-profile-option p{
+	margin:0;
+}
+
+.menu-profile-option i{
+	margin-right:1em;
+}
+
+.profile-col-right{
+	padding-top:2em;
+	padding-left:4em;
+	padding-right:3em;
+}
+
+.container-profile{
+	
+	background:#fff;
+}
+
+.a-menu-profile,.a-menu-profile:active,.a-menu-profile:hover{
+	color:inherit;
+}
+
+.profile-section{
+	padding-top: 2em;
+	background:#eee;
+	background-size: cover;
+	display: block;
+	padding-bottom:3em;
+	height:100%;
+
+}
+
+.fa.fa-star-o{
+	color:orange;
+}
+
+.alert-warning-mis-viajes{
+	margin-bottom:0.5em;
+	margin-top:0;
+}
+
+/* busqueda viajes*/
+.profile-img-viaje{
+	border-radius: 100%;
+	display:block;
+	width:7em;
+	margin:0 auto;
+	height:auto;
+	border:4px solid #f3f3f3;
+}
+
+.h3-listado-viajes{
+	margin-top:0;
+}
+
+.viaje-container{
+	border:1px solid #eee;
+	background:#fff;
+	margin-bottom:0.5em;
+	border-radius:1em;
+	padding:2em;
+}
+
+
+.viaje-container:hover{
+	cursor:pointer;
+	
+	background:#f3f3f3;
+}
+
+.col-viaje-profile{
+
+	border-right:1px dotted #2e9afe;
+	border-top-left-radius: 1em;
+	border-bottom-left-radius: 1em;
+}
+
+.col-viaje-info{
+	padding-left:2em;
+	padding-right:0;
+	
+
+	
+}
+
+.money-color{
+	color:#407320
+}
+
+.credit-card-color{
+	color:#e8ca2a;
+}
+
+.user-color{
+	color:#2e9afe;
+}
+
+.btn-search-viajes{
+	background:#2e9afe;
+	color:#fff;
+	border:none;
+	padding:0.6em 1.2em;
+	border-radius: 10px;	
+}
+
+.row-viajes-form{
+	padding:2em 0;
+}
