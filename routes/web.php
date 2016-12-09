@@ -41,5 +41,8 @@ Route::get('viajes/busqueda','MueveteController@buscarViaje');
 Route::get('viajes/id/{id}','MueveteController@verViaje')->where('id','[0-9]+');
 
 
+//Preguntas y Respuestas
 Route::post('viajes/id/{id}/preguntas/create','PreguntasController@create')->where('id','[0-9]+');
 Route::post('viajes/id/{id}/respuestas/create','PreguntasController@reply')->where('id','[0-9]+');
+Route::post('viajes/id/{id}/preguntas/delete','PreguntasController@deletePregunta')->where('id','[0-9]+');
+Route::post('viajes/id/{id}/respuestas/delete','PreguntasController@deleteRespuesta')->where('id','[0-9]+');
