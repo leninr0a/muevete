@@ -31,9 +31,15 @@ Route::get('mi-cuenta/perfil','HomeController@perfil');
 Route::get('publicar','HomeController@publicarViaje');
 
 Route::post('publicar/viaje','HomeController@createViaje');
+Route::post('eliminar/viaje','HomeController@deleteViaje');
 
 Route::get('mi-cuenta/mis-viajes-publicados','HomeController@viajesPublicados');
 Route::get('mi-cuenta/mis-viajes-pasajero','HomeController@viajesPasajero');
 
 Route::get('viajes/busqueda','MueveteController@buscarViaje');
 
+Route::get('viajes/id/{id}','MueveteController@verViaje')->where('id','[0-9]+');
+
+
+Route::post('viajes/id/{id}/preguntas/create','PreguntasController@create')->where('id','[0-9]+');
+Route::post('viajes/id/{id}/respuestas/create','PreguntasController@reply')->where('id','[0-9]+');

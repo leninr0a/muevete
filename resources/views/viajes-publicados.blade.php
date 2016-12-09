@@ -105,8 +105,8 @@
 						</div>
 
 
-						 <div class="panel-footer text-right">
-						  	<button class="btn btn-danger">Cancelar viaje <i class="fa fa-trash-o"></i></button>
+						 <div class="panel-footer text-center">
+						  	<a href="{{url('viajes/id/'.$viaje->id)}}"><button class="btn-question">Ver publicaci&oacute;n</button></a> <button class="btn-cancelar" data-toggle="modal" data-target="#myModal" onclick="prepareDeleteId({{$viaje->id}})">Cancelar viaje <i class="fa fa-trash-o"></i></button>
 						  </div>
 					</div>	
 				@endforeach 
@@ -121,4 +121,37 @@
 				
 	</div>
 </section>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">¿Est&aacute;s seguro de querer eliminar este viaje?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer text-center" style="text-align: center">
+      	<form action="{{ url('eliminar/viaje') }}" method="post">
+      		{{csrf_field()}}
+      		<input type="hidden" id="viaje_id" name="viaje_id">
+      		<button type="submit" class="btn-question">Eliminar</button>
+      	</form>
+        <button type="button" class="btn-cancelar" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+@endsection
+
+@section('additionalScript')
+	<script>
+		function prepareDeleteId(viaje_id){
+			$('#viaje_id').val(viaje_id);
+		}
+	</script>
 @endsection

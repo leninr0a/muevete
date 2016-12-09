@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Viaje;
+
 
 class HomeController extends Controller
 {
@@ -72,8 +74,12 @@ class HomeController extends Controller
         $viaje = new \App\Viaje;
 
         $viaje->salida = $data["salida"];
+        $viaje->salidaLat = $data["salidaLat"];
+        $viaje->salidaLng = $data["salidaLng"];
         $viaje->user_id = Auth::user()->id;
         $viaje->llegada = $data["llegada"];
+        $viaje->llegadaLat = $data["llegadaLat"];
+        $viaje->llegadaLng = $data["llegadaLng"];
         $viaje->fecha = $data["fecha"];
         $viaje->hora = $data["hora"];
         $viaje->precio = $data["precio"];
@@ -92,5 +98,16 @@ class HomeController extends Controller
         return redirect('home');
         
         
+    }
+
+    public function deleteViaje(){
+        $data = request()->all();
+
+        $viaje = Viaje::where('id',$data["viaje_id"])
+                            ->where('user_id',Auth::user()->id);
+        
+        $viaje->first()->delete();
+
+        return redirect('mi-cuenta/mis-viajes-publicados');
     }
 }

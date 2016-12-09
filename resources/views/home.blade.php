@@ -212,7 +212,8 @@
 @endif
 
 @section('additionalScript')
-        <script>
+
+    <script>
         var autocomplete, autocomplete_2;
         function initAutocomplete() {
           // Create the autocomplete object, restricting the search to geographical
@@ -235,4 +236,6 @@
         });
     </script>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8O_HBXu0qinR_zAaUEzgWqbFtd3N2os&signed_in=true&libraries=places&callback=initAutocomplete&region=VE"
+        async defer></script>
 @endsection

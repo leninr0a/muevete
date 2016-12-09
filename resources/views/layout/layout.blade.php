@@ -96,8 +96,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="{{ URL::asset('js/bootstrap-datepicker.min.js') }}"></script>
   <script src="{{ URL::asset('js/bootstrap-timepicker.min.js') }}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8O_HBXu0qinR_zAaUEzgWqbFtd3N2os&signed_in=true&libraries=places&callback=initAutocomplete&region=VE"
-        async defer></script>
+  
+  
   @yield('additionalScript')
 </body>
 </html>

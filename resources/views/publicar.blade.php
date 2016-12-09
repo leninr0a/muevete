@@ -34,12 +34,16 @@
 				<div class="col-xs-12">
 					<h4>Lugar de salida <i class="glyphicon glyphicon-map-marker "></i></h4>
 					<input type="text" id="form_salida" class="form-control" name="salida" value="{{old('salida')}}" placeholder="Ej: Caracas, Chacao">
+					<input type="hidden" id="salidaLat" name="salidaLat">
+					<input type="hidden" id="salidaLng" name="salidaLng">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
 					<h4>Lugar de llegada <i class="glyphicon glyphicon-map-marker "></i> </h4>
 					<input type="text" id="form_llegada" class="form-control" value="{{old('llegada')}}" name="llegada" placeholder="Ej: Merida, Plaza Bolivar">
+					<input type="hidden" id="llegadaLat" name="llegadaLat">
+					<input type="hidden" id="llegadaLng" name="llegadaLng">
 				</div>
 			</div>
 			<div class="row">
@@ -175,6 +179,16 @@
 		  autocomplete = new google.maps.places.Autocomplete(document.getElementById('form_salida'),options);
 		  // When the user selects an address from the dropdown, populate the address
 		  // fields in the form.
+		  google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var place = autocomplete.getPlace();
+            document.getElementById('salidaLat').value = place.geometry.location.lat();
+            document.getElementById('salidaLng').value = place.geometry.location.lng();
+        	});
+		   google.maps.event.addListener(autocomplete_2, 'place_changed', function () {
+            var place = autocomplete_2.getPlace();
+            document.getElementById('llegadaLat').value = place.geometry.location.lat();
+            document.getElementById('llegadaLng').value = place.geometry.location.lng();
+        	});
 		}
 	</script>
 
@@ -193,4 +207,7 @@
 	<script>
         $('#timepicker1').timepicker();
     </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8O_HBXu0qinR_zAaUEzgWqbFtd3N2os&signed_in=true&libraries=places&callback=initAutocomplete&region=VE"
+    async defer></script>
 @endsection

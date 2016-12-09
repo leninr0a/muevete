@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Viaje;
+use App\User;
+use App\Pregunta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -53,6 +55,13 @@ class MueveteController extends Controller
 
 
         return view('busqueda-viajes')->with(compact('viajes'));
+    }
+
+    public function verViaje($idViaje = null){
+        $viaje = Viaje::where('id',$idViaje)->get();
+        $preguntas = Pregunta::where('viaje_id',$idViaje)->get();
+      
+        return view('viaje-info',['viaje'=>$viaje[0]]);
     }
 
 

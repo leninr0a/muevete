@@ -40,6 +40,7 @@
 					</div>
 				@endif
 				@foreach($viajes as $viaje)
+				<a href="{{ url('viajes/id/'.$viaje->id) }}" class="link-viaje-container">
 				<div class="row viaje-container">
 					<div class="col-xs-3 text-center col-viaje-profile">
 						<img src="http://www.msmlinked.com/images/NO%20IMAGE.png" class="profile-img-viaje" alt=""">
@@ -77,6 +78,7 @@
 					</div>
 
 				</div>
+				</a>
 				@endforeach
 				<div class="row">
 					<div class="col-xs-12 text-center">
@@ -91,6 +93,7 @@
 @endsection
 
 @section('additionalScript')
+
       <script>
 	 	var autocomplete, autocomplete_2;
 		function initAutocomplete() {
@@ -104,6 +107,16 @@
 		  autocomplete = new google.maps.places.Autocomplete(document.getElementById('form_salida'),options);
 		  // When the user selects an address from the dropdown, populate the address
 		  // fields in the form.
+		 google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var place = autocomplete.getPlace();
+            //document.getElementById('city2').value = place.name;
+            //document.getElementById('cityLat').value = place.geometry.location.lat();
+            //document.getElementById('cityLng').value = place.geometry.location.lng();
+            alert("This function is working!");
+            alert(place.name);
+            alert(place.geometry.location.lat());
+
+        	});
 		}
 	</script>
 
@@ -113,5 +126,8 @@
             orientation: "bottom auto"
         });
     </script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8O_HBXu0qinR_zAaUEzgWqbFtd3N2os&signed_in=true&libraries=places&callback=initAutocomplete&region=VE"
+    async defer></script>
 
 @endsection
