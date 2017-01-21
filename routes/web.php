@@ -16,8 +16,13 @@ Route::get('/home', 'MueveteController@index');
 
 
 Route::get('/register','MueveteController@register');
+
+//Usuario
 Route::post('/register/user','UserController@create');
 Route::post('/profile/update/picture','UserController@profilePicture');
+Route::post('/profile/update/phone','UserController@updatePhone');
+Route::post('/profile/update/email','UserController@updateEmail');
+Route::post('/profile/update/password','UserController@updatePassword');
 
 
 Route::get('/como-funciona','MueveteController@comoFunciona');

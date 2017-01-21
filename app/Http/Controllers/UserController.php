@@ -7,6 +7,7 @@ use App\User;
 use Validator;
 use Auth;
 
+include(app_path().'/Includes/validators.php');
 
 class UserController extends Controller
 {
@@ -19,7 +20,7 @@ class UserController extends Controller
     		'nombre'	=>	['required','string','min:3'],
     		'apellido'	=>	['required','string','min:2'],
     		'email'		=>	['required','unique:users,email','email'],
-    		'telefono'	=>	['required','numeric'],
+    		'telefono'	=>	['required','numeric','digits:11'],
     		'password'	=>	['required','confirmed','min:7'],
             'fecha'     =>  ['required','date']
     	]);
@@ -69,6 +70,50 @@ class UserController extends Controller
             $user = new User;
             $user->where('id',Auth::user()->id)->update(['picture'=>$name]);
             return redirect('mi-cuenta/perfil')->with('status', 'Su imagen de perfil ha sido cambiada con éxito');
+        }
+    }
+
+    public function updatePhone(){
+        $this->validate(request(), 
+            ['telefono'  =>  ['required','numeric','digits:11'],
+        ]);
+        $data=request()->all();
+        User::where('id',Auth::user()->id)->update(['telefono'=>$data["telefono"]]);
+        return redirect('mi-cuenta/perfil')->with('status', 'Tu número de teléfono ha sido actualizado con éxito.');
+        
+    }
+
+    public function updateEmail(){
+        $this->validate(request(), 
+            ['email'  =>  ['required','unique:users,email','email'],
+        ]);
+        $data=request()->all();
+        User::where('id',Auth::user()->id)->update(['email'=>$data["email"]]);
+        return redirect('mi-cuenta/perfil')->with('status', 'Tu dirección de correo ha sido actualizado con éxito. La próxima vez que inicies sesión debes hacerlo usando tu nueva dirección.');
+       
+    }
+
+    public function updatePassword(){
+
+        $rules = [
+            'old_password'  => 'required|old_password:' . Auth::user()->password,
+            'password'      =>  ['required','confirmed','min:7']
+        ];
+        $messages = [
+            'old_password.required' => 'El campo contraseña actual no puede estar vacio ',
+            'old_password.old_password' => 'La contraseña actual no es correcta',
+            'password.required' => 'El campo contraseña no puede estar vacio',
+            'password.confirmed' => 'Las contraseñas ingresadas no coinciden',
+            'password.min' => 'La contraseña debe ser mayor a 7 caracteres'
+        ];
+        
+        $validator = Validator::make(request()->all(), $rules, $messages);
+
+      
+         if ($validator->fails()){
+            return redirect('mi-cuenta/perfil')->withErrors($validator);
+        }else{
+            return redirect('mi-cuenta/perfil')->with('status', 'Tu contraseña ha sido actualizada con éxito. La próxima vez que inicies sesión debes hacer usando tu nueva contraseña.');
         }
     }
 }
