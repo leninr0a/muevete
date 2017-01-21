@@ -18,6 +18,11 @@
 	padding-bottom:0.5em;
 }
 
+
+.panel-fixed-height{
+	height:17em;
+}
+
 .menu li{
 	display:inline-block;
 	padding:0.5em 2em;
@@ -275,6 +280,11 @@ form{
 
 }
 
+.content-viaje-info{
+	background:#eee;
+	margin:0;
+}
+
 /* Footer */
 footer{
 	position: absolute;
@@ -424,6 +434,13 @@ ul.dropdown-lr .input-group{
 	padding:2em;
 }
 
+.save-picture{
+	background:transparent;
+	border:none;
+	font-size:1.5em;
+	display:none;
+}
+
 .container-como-funciona{
 	padding:2em 0em 5em 2em;
 }
@@ -437,6 +454,41 @@ ul.dropdown-lr .input-group{
 .mini-hr-white{
 	border-color:#fff;
 }
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    padding:0.8em 2em;
+    font-weight: 700;
+    color: white;
+    background-color: #2e9afe;
+    border:1px solid #2e9afe;
+    display: inline-block;
+}
+
+.inputfile .fa{
+	margin-left:1em;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #fff;
+    border: 1px solid #2e9afe;
+    color:#2e9afe;
+    transition: 0.5s;
+}
+
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
+
 
 .number{
 	display:table;
@@ -566,7 +618,7 @@ ul.dropdown-lr .input-group{
 
 }
 
-.fa.fa-star-o{
+.fa-star,.fa.fa-star-o{
 	color:orange;
 }
 
@@ -615,8 +667,6 @@ ul.dropdown-lr .input-group{
 	padding-left:2em;
 	padding-right:0;
 	
-
-	
 }
 
 .money-color{
@@ -664,6 +714,20 @@ ul.dropdown-lr .input-group{
     color:inherit;
 }
 
+.btn-accept-request,.btn-reject-request{
+	color:#fff;
+	border-radius:1em;
+	border:none;
+	padding:0.5em 1em;
+}
+
+.btn-accept-request{
+	background:#32ca32;
+}
+.btn-reject-request{
+	background:#fd6d6d;
+}
+
 /* Informacion viaje */
 
 .btn-reservar{
@@ -683,7 +747,7 @@ ul.dropdown-lr .input-group{
 	transition: 0.5s;
 }
 
-.asientos-reservados{
+.asientos-no-reservados{
 	margin:0.5em 0.25em;
 }
 
@@ -692,6 +756,12 @@ ul.dropdown-lr .input-group{
 	height:5em;
 	border-radius:100%;
 }
+
+.asientos-reservados{
+	display:inline-block;
+	margin:0.5em;
+}
+
 
 .avatar-asientos{
 	margin:0.5em;
@@ -735,7 +805,14 @@ ul.dropdown-lr .input-group{
 .container-viaje-info{
 	padding-top:2em;
 	padding-bottom:4em;
-	margin-top:1em;
+	
+	background:#fff;
+	padding-left:3em;
+	padding-right:3em;
+}
+
+.city-h3{
+	margin-top:0;
 }
 
 #map{
@@ -756,6 +833,11 @@ ul.dropdown-lr .input-group{
 	color:#2e9afe;
 	cursor: pointer;
 	font-weight: bold;
+}
+
+.preguntas-title{
+	margin-top:2em;
+	margin-bottom:1em;
 }
 
 .reply-text:hover{

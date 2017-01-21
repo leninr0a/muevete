@@ -1,6 +1,8 @@
 @extends('layout.layout')
 
 @section('content')
+<?php use Carbon\Carbon; ?>
+
 	<div class="container">
 		<div class="row row-viajes-form">
 			 <form action="{{url('viajes/busqueda')}}" method="GET">
@@ -43,14 +45,14 @@
 				<a href="{{ url('viajes/id/'.$viaje->id) }}" class="link-viaje-container">
 				<div class="row viaje-container">
 					<div class="col-xs-3 text-center col-viaje-profile">
-						<img src="http://www.msmlinked.com/images/NO%20IMAGE.png" class="profile-img-viaje" alt=""">
+						<img src="{{URL::asset('images/profiles/'.$viaje->user->picture)}}" class="profile-img-viaje" alt=""">
 						<p><strong>{{$viaje->user->nombre}} {{$viaje->user->apellido}}</strong> <br> <small>
 							@if($viaje->user->genero == 'M')
 								Hombre
 							@else
 								Mujer
 							@endif
-						</small> <br> <small>24 a&ntilde;os</small> <br> <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></p>
+						</small> <br> <small>{{$edad = (new Carbon($viaje->user->fecha_nacimiento))->age}} años</small> <br> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></p>
 					
 					</div>
 					<div class="col-xs-5 col-viaje-info">
@@ -70,11 +72,9 @@
 					</div>
 					<div class="col-xs-4 col-viaje-info-2">
 						<h5 class="h3-listado-viajes">Asientos disponibles:</h5>
-						<h1 class="h3-listado-viajes">
-							@for($i=0;$i<$viaje->asientos;$i++)
-							<i class="fa fa-user-o user-color"></i>
-							@endfor
-						</h1>
+						@for($i=0;$i<$viaje->asientos;$i++)
+						<img src="https://www.appointbetterboards.co.nz/Custom/Appoint/img/avatar-large.png" class="avatar-asientos">
+						@endfor
 					</div>
 
 				</div>

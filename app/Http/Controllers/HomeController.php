@@ -39,8 +39,8 @@ class HomeController extends Controller
     }
 
     public function viajesPublicados(){
-        $viajes = DB::table('viajes')->where('user_id',Auth::user()->id)->paginate(3);
-        
+        //$viajes = DB::table('viajes')->where('user_id',Auth::user()->id)->paginate(3);
+        $viajes = Viaje::where('user_id',Auth::user()->id)->paginate(3);
         return view('viajes-publicados')->with(compact('viajes'));
     }
 

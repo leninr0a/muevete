@@ -17,6 +17,7 @@ Route::get('/home', 'MueveteController@index');
 
 Route::get('/register','MueveteController@register');
 Route::post('/register/user','UserController@create');
+Route::post('/profile/update/picture','UserController@profilePicture');
 
 
 Route::get('/como-funciona','MueveteController@comoFunciona');
@@ -46,3 +47,8 @@ Route::post('viajes/id/{id}/preguntas/create','PreguntasController@create')->whe
 Route::post('viajes/id/{id}/respuestas/create','PreguntasController@reply')->where('id','[0-9]+');
 Route::post('viajes/id/{id}/preguntas/delete','PreguntasController@deletePregunta')->where('id','[0-9]+');
 Route::post('viajes/id/{id}/respuestas/delete','PreguntasController@deleteRespuesta')->where('id','[0-9]+');
+
+//Reservas
+Route::post('viajes/id/{id}/reservas/create','ReservasController@create')->where('id','[0-9]+');
+Route::post('mi-cuenta/reservas/aceptar','ReservasController@aceptar')->where('id','[0-9]+');
+Route::post('mi-cuenta/reservas/rechazar','ReservasController@rechazar')->where('id','[0-9]+');

@@ -23,7 +23,7 @@
                 @include('partials/errors')
             </div>
         </div>
-        <form action="{{url('/register')}}" method="POST">
+        <form action="{{url('/register/user')}}" method="POST">
             <div class="row row-register-form">
                 <div class="col-xs-2">
                     <p>C&eacute;dula</p>
@@ -78,6 +78,14 @@
                 
             </div>
             <div class="row row-register-form">
+                <div class="col-xs-6">
+                    <p>Fecha de nacimiento</p>
+                    <div id="sandbox-container" class="input-group date">
+                      <input type="text" id="fecha-nacimiento" name="fecha" class="form-control" value="{{old('fecha')}}" data-date-format="yyyy-mm-dd"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>      
+                </div>
+            </div>
+            <div class="row row-register-form">
                 <div class="col-xs-6 ">
                     
                     <p><small>Al registrarme, declaro que soy mayor de edad y acepto las <a href="">Pol&iacute;ticas de privacidad</a> y los <a href="">T&eacute;rminos y condiciones de uso</a></small></p>
@@ -103,4 +111,13 @@
     </div>
 </div>
 
+@endsection
+
+@section('additionalScript')
+    <script>
+        $('#fecha-nacimiento').datepicker({
+            endDate: "-18y",
+            orientation: "bottom auto",
+        });
+    </script>
 @endsection

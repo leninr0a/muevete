@@ -18,6 +18,10 @@ class Viaje extends Model
     	return $this->hasMany(Respuesta::class);
     }
 
+    public function reservas(){
+        return $this->hasMany(Reserva::class);
+    }
+
      protected static function boot() {
         parent::boot();
 

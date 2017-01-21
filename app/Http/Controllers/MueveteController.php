@@ -60,6 +60,7 @@ class MueveteController extends Controller
     public function verViaje($idViaje = null){
         $viaje = Viaje::where('id',$idViaje)->get();
         $preguntas = Pregunta::where('viaje_id',$idViaje)->get();
+        
       
         return view('viaje-info',['viaje'=>$viaje[0]]);
     }

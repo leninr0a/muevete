@@ -12,6 +12,8 @@ class PreguntasController extends Controller
 {
 
     public function create(){
+     
+
     	//Valida que el campo pregunta tenga un valor valido
     	$this->validate(request(), [
     		'pregunta'	=>	['required','string'],

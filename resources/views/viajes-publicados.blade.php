@@ -1,22 +1,22 @@
+<?php use Carbon\Carbon; ?>
 @extends('layout.layout')
 
 @section('content')
-
+{{csrf_field()}}
 <section class="profile-section">
 	<div class="container container-profile well">
 		<div class="row">
 			<div class="col-xs-4 profile-col-left ">
 				<div class="row">
 					<div class="col-xs-12">
-						<img src="http://www.msmlinked.com/images/NO%20IMAGE.png" class="profile-img" alt="">
-
+						<img src="{{URL::asset('images/profiles/'.Auth::user()->picture)}}" class="profile-img" alt="">
 					</div>
 				</div>
 				<div class="row">
 					<div class="row">
 						<div class="col-xs-12 text-center">
 							<h3><strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong></h3>
-							<h5 class="text-center"><small><a href="">cambiar imagen de perfil</a></small></h5>
+							
 						</div>
 					</div>
 					<a href="perfil" class="a-menu-profile">
@@ -38,14 +38,18 @@
 			</div>
 			<div class="col-xs-8 profile-col-right  ">
 				@foreach ($viajes as $viaje)
+						<?php 
+						$reservas_aceptadas_count = 0;
+						$reservas_pendientes_count = 0;
+						?>
 						<div class="panel panel-default">
 						  <div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-8">
-									<h4><strong><i class="fa fa-circle-o green"></i> {{$viaje->salida}} <i class="fa fa-long-arrow-right"></i> <i class="fa fa-circle-o red"></i> {{$viaje->llegada}}</strong> </h4>
+									<h4><i class="fa fa-circle-o green"></i> {{$viaje->salida}} <i class="fa fa-long-arrow-right"></i> <i class="fa fa-circle-o red"></i> {{$viaje->llegada}} </h4>
 								</div>
 								<div class="col-xs-4 text-right">
-									<h5><strong><i class="fa fa-clock-o"></i> {{$viaje->hora}}</strong> / <strong><i class="fa fa-calendar-check-o"></i> {{$viaje->fecha}} </strong></h5>
+									<h5><strong><i class="fa fa-calendar-check-o"></i> {{$fecha = (new Carbon($viaje->fecha))->toFormattedDateString()}}</strong> <strong><i class="fa fa-clock-o"></i> {{$viaje->hora}}</strong></h5>
 								</div>
 							</div>
 
@@ -70,10 +74,46 @@
 								Asientos reservados:
 									<div class="perfil-reservado">
 										<div class="row">
-											<div class="col-xs-12">
-												<div class="alert alert-warning alert-warning-mis-viajes">
-												   Aun no tienes pasajeros en tu viaje.
-												</div>
+											<div class="col-xs-12 warning-holder-aceptadas-{{$viaje->id}}">
+												 @if($viaje->reservas)
+														@foreach($viaje->reservas as $reserva)
+														@if($reserva->estado == 'aceptada')
+														<?php $reservas_aceptadas_count++; ?>
+														<div class="alert alert-warning alert-warning-mis-viajes" id="alert-reserva-{{$reserva->id}}">
+														<div class="row">
+															<div class="col-xs-3 text-center">
+															<img src="{{URL::asset('images/profiles/'.$reserva->user->picture) }}" class="avatar-questions" alt="">
+															</div>
+															<div class="col-xs-4">
+															<p>Nombre: {{$reserva->user->nombre}} {{$reserva->user->apellido}}</p>
+															<p>Edad: {{$edad = (new Carbon($reserva->user->fecha_nacimiento))->age}} años</p>
+															<p>Tel&eacute;fono: {{$reserva->user->telefono}}</p>
+
+															</div>
+															<div class="col-xs-5 text-center">
+																
+																	<button class="btn-reject-request btn-reject-{{$reserva->id}}" onclick="rejectRequest({{$reserva->id}},{{$viaje->id}})">Rechazar <i class="fa fa-close"></i>
+																	</button>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 text-right">
+																<p><small>{{$reserva->created_at->diffForHumans()}}</small></p>
+															</div>
+														</div>
+														</div>
+														@endif
+														@endforeach
+														@if($reservas_aceptadas_count == 0)
+															<div class="alert alert-warning alert-warning-no-passangers-{{$viaje->id}}">
+															<div class="row">
+																<div class="col-xs-12">
+																	<p>No hay pasajeros para este viaje</p>
+																</div>
+															</div>
+															</div>
+														@endif
+													@endif
 											</div>	
 										</div>
 									</div>
@@ -83,10 +123,52 @@
 									Solicitudes de reserva:
 									<div class="perfil-reservado">
 										<div class="row">
-											<div class="col-xs-12">
-												<div class="alert alert-warning alert-warning-mis-viajes">
-												   Aun no tienes solicitudes de reserva de acientos.
-												</div>
+											<div class="col-xs-12 warning-holder-{{$viaje->id}}">
+												
+												   @if($viaje->reservas)
+														@foreach($viaje->reservas as $reserva)
+														@if($reserva->estado == 'pendiente')
+														<?php $reservas_pendientes_count++;?>
+														<div class="alert alert-warning alert-warning-mis-viajes" id="alert-reserva-{{$reserva->id}}">
+														<div class="row">
+															<div class="col-xs-3 text-center">
+															<img src="{{URL::asset('images/profiles/'.$reserva->user->picture) }}" class="avatar-questions" alt="">
+															</div>
+															<div class="col-xs-4">
+															<p>Nombre: {{$reserva->user->nombre}} {{$reserva->user->apellido}}</p>
+															<p>Edad: {{$edad = (new Carbon($reserva->user->fecha_nacimiento))->age}} años</p>
+															<p>Tel&eacute;fono: {{$reserva->user->telefono}}</p>
+
+															</div>
+															<div class="col-xs-5 text-center">
+																
+																	<button class="btn-accept-request btn-accept-{{$reserva->id}}" onclick="acceptRequest({{$reserva->id}},{{$viaje->id}})">Aceptar <i class="fa fa-check"></i>
+																	</button>
+																	<button class="btn-reject-request btn-reject-{{$reserva->id}}" onclick="rejectRequest({{$reserva->id}},{{$viaje->id}})">Rechazar <i class="fa fa-close"></i>
+																	</button>
+																
+
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 text-right">
+																<p><small>{{$reserva->created_at->diffForHumans()}}</small></p>
+															</div>
+														</div>
+														</div>
+														@endif
+														@endforeach
+														@if($reservas_pendientes_count == 0)
+														<div class="alert alert-warning alert-warning-mis-viajes-none" id="no-reservas-warning">
+														<div class="row">
+															<div class="col-xs-12">
+																<p>No tienes solicitudes de reserva para este viaje</p>
+															</div>
+														</div>
+														</div>
+														@endif
+												   @endif
+												
 											</div>	
 										</div>
 									</div>
@@ -153,5 +235,54 @@
 		function prepareDeleteId(viaje_id){
 			$('#viaje_id').val(viaje_id);
 		}
+
+		function acceptRequest(reserva_id,viaje_id){
+			$.ajax({
+		 		type: "POST",
+	            url: 'reservas/aceptar',
+	            data : {'reserva_id':reserva_id,'viaje_id':viaje_id,'_token':$('input[name=_token]').val()},
+	            success: function (data) {
+	            	$('.alert-warning-no-passangers-'+viaje_id).hide();
+	            	$('.warning-holder-aceptadas-'+viaje_id).prepend($('#alert-reserva-'+reserva_id));
+	            	$(".btn-accept-"+reserva_id).hide();
+	            	if(data.reservas_pendientes == 0){
+	            	$(".warning-holder-"+viaje_id).prepend("<div class='alert alert-warning alert-warning-mis-viajes-none'><div class='row'><div class='col-xs-12'><p>No tienes solicitudes de reserva para  este viaje</p></div></div></div>");
+	            	}
+	            	
+	            	
+	            	
+	            	
+	            	
+	            }
+	        });
+		}
+
+		function rejectRequest(reserva_id,viaje_id){
+			$.ajax({
+		 		type: "POST",
+	            url: 'reservas/rechazar',
+	            data : {'reserva_id':reserva_id,'viaje_id':viaje_id,'_token':$('input[name=_token]').val()},
+	            success: function (data) {
+	            console.log(data);
+
+	            $('#alert-reserva-'+reserva_id).toggle(300,function(){
+	            	var warning = $('.warning-holder-'+viaje_id+' '+'.alert-warning-mis-viajes-none');
+	            	var warning_accepted = $('.alert-warning-no-passangers-' + viaje_id);
+	            	console.log(warning);
+	            	if(data.reservas_pendientes == 0 && warning.length == 0){
+	            	$('.warning-holder-'+viaje_id).prepend("<div class='alert alert-warning alert-warning-mis-viajes-none'><div class='row'><div class='col-xs-12'><p>No tienes solicitudes de reserva para  este viaje</p></div></div></div>");
+	            	}
+	            	if(data.reservas_aceptadas == 0 && warning_accepted.length == 0){
+	            	$(".warning-holder-aceptadas-"+viaje_id).prepend("<div class='alert alert-warning alert-warning-no-passangers-'"+viaje_id+"><div class='row'><div class='col-xs-12'><p>No hay pasajeros para este viaje</p></div></div></div>");
+	            	}else{
+	            		warning_accepted.show();
+	            	}
+	            	
+	            });
+	           
+	            }
+	        });
+		}
+
 	</script>
 @endsection

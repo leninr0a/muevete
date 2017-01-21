@@ -2,13 +2,20 @@
 
 @section('content')
 
+<?php 
+use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
+?>
+
 <section class="profile-section">
 	<div class="container container-profile well">
 		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2">
+				@include('partials.errors')
+			</div>
 			<div class="col-xs-4 profile-col-left ">
 				<div class="row">
 					<div class="col-xs-12">
-						<img src="http://www.msmlinked.com/images/NO%20IMAGE.png" class="profile-img" alt="">
+						<img src="{{URL::asset('images/profiles/'.Auth::user()->picture)}}" class="profile-img" alt="">
 
 					</div>
 				</div>
@@ -16,7 +23,15 @@
 					<div class="row">
 						<div class="col-xs-12 text-center">
 							<h3><strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong></h3>
-							<h5 class="text-center"><small><a href="">cambiar imagen de perfil</a></small></h5>
+							<h5 class="text-center">
+							<form action="/profile/update/picture" method="post" enctype="multipart/form-data">
+							{{csrf_field()}}
+							<small><input type="file" name="image" id="file" class="inputfile" /><label for="file"><span class="text-file">Sube tu foto</span> <i class="fa fa-upload"></i></label></small> <br>	
+							<button type="submit" class="save-picture"><i class="fa fa-save" ></i></button>
+							<button type="reset" class="save-picture reset-picture"><i class="fa fa-close"></i></button>
+							</form>
+							</h5>
+							
 						</div>
 					</div>
 					<div class="col-xs-12 text-left menu-profile-option menu-profile-option-active">
@@ -38,7 +53,7 @@
 				<h3>Informaci&oacute;n personal</h3>
 				<p><span class="black">Nombre:</span> {{Auth::user()->nombre}} {{Auth::user()->apellido}}</p>
 				<p><span class="black">C&eacute;dula:</span> {{Auth::user()->nacionalidad}}-{{Auth::user()->cedula}}</p>
-				<p><span class="black">Edad:</span>  24 a&ntilde;os</p> 
+				<p><span class="black">Edad:</span> {{$edad}} años</p> 
 				<p><span class="black">Sexo:</span> 
 				@if(Auth::user()->genero == 'M')
 					{{'Masculino'}}
@@ -54,4 +69,37 @@
 		</div>
 	</div>
 </section>
+@endsection
+
+
+@section('additionalScript')
+<script>
+	var inputs = document.querySelectorAll( '.inputfile' );
+	Array.prototype.forEach.call( inputs, function( input )
+	{
+		var label	 = input.nextElementSibling,
+			labelVal = label.innerHTML;
+
+		input.addEventListener( 'change', function( e )
+		{
+			var fileName = '';
+			if( this.files && this.files.length > 1 )
+				fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+			else
+				fileName = e.target.value.split( '\\' ).pop();
+
+			if( fileName )
+				label.querySelector( 'span' ).innerHTML = fileName;
+			else
+				label.innerHTML = labelVal;
+
+			$('.save-picture').css('display','inline-block');
+		});
+	});
+	$('.reset-picture').click(function(){
+		$('.save-picture').css('display','none');
+		$('.text-file').text("Sube tu foto");
+	});
+</script>
+
 @endsection

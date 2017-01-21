@@ -21,7 +21,7 @@
 				<div class="col-xs-10 text-right">
 					<ul class="menu navbar navbar-right">
 						<a href="{{url('/')}}"><li>Inicio</em></li></a>
-						<a href="{{url('publicar')}}"><li>Publicar viaje</li></a>
+						<a href="{{url('publicar')}}"><li>Publicar viaje <i class="fa fa-automobile"></i></li></a>
 						
 						 <!-- Authentication Links -->
                         @if (Auth::guest())
@@ -50,7 +50,7 @@
 		                          		<p class="text-center"><a href=""><small>¿Olvidaste tu contrase&ntilde;a?</small></a></p>
 		                          		<div class="col-xs-12 ">
 		                          				<hr>	
-		                          			<img src="images/btn_facebook.png" class="img-responsive" alt="">
+		                          			<img src="{{URL::asset('images/btn_facebook.png')}}" class="img-responsive" alt="">
 		                          		</div>
 		                          		
 		                          	</li>

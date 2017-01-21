@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('telefono');
             $table->string('genero');
             $table->string('nacionalidad');
+            $table->string('picture')->default('man.png');
+            $table->date('fecha_nacimiento');
             $table->rememberToken();
             $table->timestamps();
         });

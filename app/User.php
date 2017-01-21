@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'cedula','nombre','apellido','email','password','telefono','nacionalidad','genero',
+        'cedula','nombre','apellido','email','password','telefono','nacionalidad','genero','fecha_nacimiento','picture'
     ];
 
     /**
@@ -38,5 +38,9 @@ class User extends Authenticatable
 
     public function respuestas(){
         return $this->hasMany(Respuesta::class);
+    }
+
+    public function reservas(){
+        return $this->hasMany(Reserva::class);
     }
 }
