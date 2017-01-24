@@ -9,8 +9,10 @@
 	<link rel="stylesheet" href="{{ URL::asset('css/animate.css') }} "> 
 	<link rel="stylesheet" href="{{ URL::asset('css/bootstrap-datepicker.min.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('css/bootstrap-timepicker.min.css') }}">
+	<link rel="stylesheet" href="{{ URL::asset('css/checkboxes.css') }}">
+	<link rel="stylesheet" href="{{ URL::asset('css/vesper-icons.css')}}">
 	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-
+	
 </head>
 <header class="header">
 		<div class="container">

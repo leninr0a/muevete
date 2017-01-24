@@ -30,6 +30,14 @@ class CreateViajesTable extends Migration
             $table->text('informacion');
             $table->boolean('efectivo');
             $table->boolean('pago_online');
+            $table->boolean('aire');
+            $table->boolean('fumar');
+            $table->boolean('comer');
+            $table->boolean('musica');
+            $table->boolean('mascotas');
+            $table->boolean('ninios');
+            $table->enum('equipaje',['pequeno','mediano','grande']);
+            $table->integer('vehiculo_id');
             $table->timestamps();
 
         });

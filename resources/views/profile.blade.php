@@ -66,12 +66,40 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
 					{{'Femenino'}}
 				@endif
 				</p>
-				<p><span class="black">Tel&eacute;fono:</span> {{Auth::user()->telefono}} |  <small><a data-toggle="modal" data-target="#editPhoneModal">cambiar</a></small></p>
-				<p><span class="black">Email:</span> {{Auth::user()->email}} |  <small><a data-toggle="modal" data-target="#editEmailModal">cambiar</a></small></p>
+				<p><span class="black">Tel&eacute;fono:</span> {{Auth::user()->telefono}} |  <small><a data-toggle="modal" class="change-button" data-target="#editPhoneModal">cambiar</a></small></p>
+				<p><span class="black">Email:</span> {{Auth::user()->email}} |  <small><a data-toggle="modal"  class="change-button"data-target="#editEmailModal">cambiar</a></small></p>
 
-				<p><span class="black">Contrase&ntilde;a:</span> ******** |  <small><a data-toggle="modal" data-target="#editPasswordModal">cambiar</a></small></p>
-				<p><span class="black">Reputaci&oacute;n:</span> <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i> 0/5 - 0 calificaciones</p>
+				<p><span class="black">Contrase&ntilde;a:</span> ******** |  <small><a data-toggle="modal" class="change-button" data-target="#editPasswordModal">cambiar</a></small></p>
+				<p><span class="black">Reputaci&oacute;n:</span> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 0/5 - 0 calificaciones</p>
+				<div class="row">
+					<div class="col-xs-12">
+						<h3>Tus veh&iacute;culos</h3>
+					</div>
+					<div class="col-xs-12">
+					 <table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th class="text-center">Marca</th>
+					        <th class="text-center">Modelo</th>
+					        <th class="text-center">Año</th>
+					        <th></th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					     @foreach(Auth::user()->vehiculos as $vehiculo)
+							<tr class="text-center">
+								<td>{{$vehiculo->marca}}</td>
+								<td>{{$vehiculo->modelo}}</td>
+								<td>{{$vehiculo->anio}}</td>
+								<td><i class="fa fa-trash"></i></td>
+							</tr>
+						 @endforeach
+					  </table>
+						
+					</div>
+				</div>
 			</div>
+			
 		</div>
 	</div>
 </section>

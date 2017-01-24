@@ -22,6 +22,10 @@ class Viaje extends Model
         return $this->hasMany(Reserva::class);
     }
 
+    public function vehiculo(){
+        return $this->hasOne(vehiculo::class);
+    }
+
      protected static function boot() {
         parent::boot();
 

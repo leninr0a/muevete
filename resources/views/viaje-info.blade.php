@@ -13,30 +13,21 @@
 		<div class="row first-row-travel-info">
 			<div class="col-xs-6">
 				<h3 class="text-center">Detalles del viaje</h3>
-				<h4 class="city-h3"><small><i class="glyphicon glyphicon-map-marker green"></i></small> <span id="salida">{{$viaje->salida}}</span></h4>
-				<h4 class="city-h3"><small><i class="glyphicon glyphicon-map-marker red"></i></small> <span id="llegada">{{$viaje->llegada}}</span></h4>
+				<h4 class="city-h3"><i class="glyphicon glyphicon-map-marker green"></i> <span id="salida">{{$viaje->salida}}</span></h4>
+				<h4 class="city-h3"><i class="glyphicon glyphicon-map-marker red"></i> <span id="llegada">{{$viaje->llegada}}</span></h4>
 				<input type="hidden" id="salidaLat" value={{$viaje->salidaLat}}>
 				<input type="hidden" id="salidaLng" value={{$viaje->salidaLng}}>
 				<input type="hidden" id="llegadaLat" value={{$viaje->llegadaLat}}>
 				<input type="hidden" id="llegadaLng" value={{$viaje->llegadaLng}}>
-				<h4><small><i class="fa fa-calendar-o"></i></small> {{$fecha = (new Carbon($viaje->fecha))->format('l jS \\of F Y')}}</h4>
-				<h4><small><i class="fa fa-clock-o"></i></small> {{$viaje->hora}}</h4>
-				<h4>Informaci&oacute;n adicional:</h4>
+				<h4><i class="fa fa-calendar-o"></i> {{$fecha = (new Carbon($viaje->fecha))->format('l jS \\of F Y')}}</h4>
+				<h4><i class="fa fa-clock-o"></i> Hora de salida: {{$viaje->hora}}</h4>
+				<h4><i class="fa fa-road"></i> Distancia: <span id="distancia-span"></span></h4>
+				<h4><i class="fa fa-hourglass-2"></i> Duraci&oacute;n estimada: <span id="duracion-span"></span></h4>
+				<h4><i class="fa fa-quote-left"></i> Informaci&oacute;n adicional:</h4>
 				<p>{{$viaje->informacion}}</p>
-				<h4>{{$viaje->precio}} Bs</h4>
-					<h3 class="text-center">Datos del conductor</h3>
-				<img src="{{URL::asset('images/profiles/'.$viaje->user->picture) }}" class="avatar-conductor" alt="">
-				<p class="text-center"><span id="nombre-conductor">{{$viaje->user->nombre}} {{$viaje->user->apellido}}</span>
-				<br>
-				<small>
-				@if($viaje->user->genero == 'M')
-					Hombre
-				@else
-					Mujer
-				@endif
-				<br>{{$edad = (new Carbon($viaje->user->fecha_nacimiento))->age}} años <br>
-				</small>
-				</p>
+				<h4 class="text-center price">{{$viaje->precio}} Bs</h4>
+				
+				
 
 			
 			</div>
@@ -44,6 +35,37 @@
 				 <div id="map"></div>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h3 class="text-center">Datos del conductor</h3>
+				<img src="{{URL::asset('images/profiles/'.$viaje->user->picture) }}" class="avatar-conductor" alt="">
+				<p class="text-center"><span id="nombre-conductor">{{$viaje->user->nombre}} {{$viaje->user->apellido}}</span>
+				<br>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star-o"></i>
+					<br>
+				<small>
+
+				@if($viaje->user->genero == 'M')
+					Hombre
+				@else
+					Mujer
+				@endif
+				<br>{{$edad = (new Carbon($viaje->user->fecha_nacimiento))->age}} años <br>
+
+				</small>
+				</p>
+			</div>
+		
+		</div>
+
+
+
+
 		<div class="row">
 			<div class="col-xs-6">
 				   
@@ -298,7 +320,7 @@
 
 		  var map = new google.maps.Map(document.getElementById('map'), {
 		    zoom: 7,
-		    center: {lat: 41.85, lng: -87.65}
+		    center: {lat: 10.5, lng: -66.91}
 		  });
 
 		 	var startMarker = new google.maps.Marker({
@@ -321,7 +343,8 @@
 			travelMode: google.maps.TravelMode.DRIVING
 			}, function(response, status) {
 			if (status === google.maps.DirectionsStatus.OK) {
-			  console.log("bien");
+			  $('#distancia-span').html(response.routes[0].legs[0].distance.text);
+			  $('#duracion-span').html(response.routes[0].legs[0].duration.text);
 			  directionsDisplay.setDirections(response);
 			} else {
 			  window.alert('Directions request failed due to ' + status);

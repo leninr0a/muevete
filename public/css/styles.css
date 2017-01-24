@@ -12,6 +12,9 @@
 	list-style: none;
 }
 
+.modal-footer{
+	border-top: none !important;
+}
 
 .menu-row{
 	padding-top:0.5em;
@@ -22,7 +25,13 @@
 .panel-fixed-height{
 	height:17em;
 }
+.car-form{
+	display:none;
+}
 
+.datepicker-publicar .datepicker-inline{
+	margin:0 auto;
+}
 .menu li{
 	display:inline-block;
 	padding:0.5em 2em;
@@ -222,6 +231,18 @@
 	height:auto;
 	margin: 0 auto;
 }
+
+.baggage-container i{
+	display:inline-block;
+}
+.baggage-container-small{
+	padding-top:1.5em;
+}
+.baggage-container-medium{
+	padding-top:0.6em;
+}
+
+
 
 .device-section{
 	padding-top:3em;
@@ -571,6 +592,16 @@ ul.dropdown-lr .input-group{
 .black{
 	color:#000;
 }
+
+.change-button{
+	cursor:pointer;
+}
+
+.change-button:hover{
+	text-decoration: none;
+	font-weight: bold;
+}
+
 .profile-section{
 	background: #f3f3f3;
 	min-height: 100vh;
@@ -820,6 +851,16 @@ ul.dropdown-lr .input-group{
 	height:400px;
 }
 
+.preference-container{
+	padding-top:2em;
+}
+
+
+.vs-drumstick,.vs-smoking-alt,.vs-baby{
+	margin-top:0.5em;
+}
+
+
 .reply-text,.eliminar-pregunta{
 	color:#2e9afe;
 }
@@ -857,3 +898,4 @@ ul.dropdown-lr .input-group{
 	padding:0.5em 1em;
 	border-radius: 1em;
 }
+

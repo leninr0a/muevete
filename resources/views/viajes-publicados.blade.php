@@ -37,6 +37,11 @@
 				</div>
 			</div>
 			<div class="col-xs-8 profile-col-right  ">
+			@if(Auth::user()->viajes->count() == 0)
+				<div class="alert alert-info">
+				   No has publicado ning&uacute;n viaje.
+				</div>
+			@else
 				@foreach ($viajes as $viaje)
 						<?php 
 						$reservas_aceptadas_count = 0;
@@ -46,7 +51,7 @@
 						  <div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-8">
-									<h4><i class="fa fa-circle-o green"></i> {{$viaje->salida}} <i class="fa fa-long-arrow-right"></i> <i class="fa fa-circle-o red"></i> {{$viaje->llegada}} </h4>
+									<h5><i class="fa fa-circle-o green"></i> {{$viaje->salida}} <i class="fa fa-long-arrow-right"></i> <i class="fa fa-circle-o red"></i> {{$viaje->llegada}} </h5>
 								</div>
 								<div class="col-xs-4 text-right">
 									<h5><strong><i class="fa fa-calendar-check-o"></i> {{$fecha = (new Carbon($viaje->fecha))->toFormattedDateString()}}</strong> <strong><i class="fa fa-clock-o"></i> {{$viaje->hora}}</strong></h5>
@@ -188,10 +193,11 @@
 
 
 						 <div class="panel-footer text-center">
-						  	<a href="{{url('viajes/id/'.$viaje->id)}}"><button class="btn-question">Ver publicaci&oacute;n</button></a> <button class="btn-cancelar" data-toggle="modal" data-target="#myModal" onclick="prepareDeleteId({{$viaje->id}})">Cancelar viaje <i class="fa fa-trash-o"></i></button>
+						  	<a href="{{url('viajes/id/'.$viaje->id)}}"><button class="btn-question">Ver publicaci&oacute;n</button></a> <button class="btn-cancelar" data-toggle="modal" data-target="#myModal" onclick="prepareDeleteId({{$viaje->id}},{{$viaje->asientos_reservados}})">Cancelar viaje <i class="fa fa-trash-o"></i></button>
 						  </div>
 					</div>	
 				@endforeach 
+			@endif	
 				<div class="row">
 					<div class="col-xs-12 text-center">
 						{{ $viajes->links() }}
@@ -214,7 +220,7 @@
         <h4 class="modal-title">¿Est&aacute;s seguro de querer eliminar este viaje?</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        <div class="alert modal-warning"><span id="asientos_reservados"></span></div>
       </div>
       <div class="modal-footer text-center" style="text-align: center">
       	<form action="{{ url('eliminar/viaje') }}" method="post">
@@ -232,7 +238,15 @@
 
 @section('additionalScript')
 	<script>
-		function prepareDeleteId(viaje_id){
+		function prepareDeleteId(viaje_id,asientos_reservados){
+			if(asientos_reservados > 0){
+				$('.modal-warning').removeClass( "alert-success").addClass('alert-danger');
+				var mensaje = "Tienes <strong>"+asientos_reservados+"</strong> reservas para este viaje. Si cancelas el viaje, autom&aacute;ticamente recibiras <strong>"+asientos_reservados+"</strong> calificaciones de cero estrellas y tu reputaci&oacute;n se ver&aacute; afectada negativamente";
+			}else{
+				$('.modal-warning').removeClass( "alert-danger").addClass('alert-success');
+				var mensaje = "Tienes 0 reservas de asiento en este viaje. Puedes cancelar el viaje y no recibir ning&uacute;n tipo de penalizaci&oacute;n.";
+			}
+			$('#asientos_reservados').html(mensaje);
 			$('#viaje_id').val(viaje_id);
 		}
 
