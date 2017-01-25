@@ -14,7 +14,7 @@ class Vehiculo extends Model
     	return $this->belongsTo(User::class);
     }
 
-    public function viaje(){
-    	return $this->belongsToMany(Viaje::class);
+    public function viajes(){
+    	return $this->hasMany(Viaje::class);
     }
 }

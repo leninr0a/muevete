@@ -73,7 +73,7 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
 				<p><span class="black">Reputaci&oacute;n:</span> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 0/5 - 0 calificaciones</p>
 				<div class="row">
 					<div class="col-xs-12">
-						<h3>Tus veh&iacute;culos</h3>
+						<h3>Tus veh&iacute;culos </h3>
 					</div>
 					<div class="col-xs-12">
 					 <table class="table table-hover">
@@ -81,25 +81,36 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
 					      <tr>
 					        <th class="text-center">Marca</th>
 					        <th class="text-center">Modelo</th>
+					        <th class="text-center">Placa</th>
 					        <th class="text-center">Año</th>
 					        <th></th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					     @foreach(Auth::user()->vehiculos as $vehiculo)
+					    @if(Auth::user()->vehiculos->count() == 0)
 							<tr class="text-center">
+								<td colspan="5">Aun no has agregado ning&uacute;n veh&iacute;culo</td>
+							</tr>
+							
+						@else
+					    @foreach(Auth::user()->vehiculos as $vehiculo)
+							<tr id="vehicleRowId-{{$vehiculo->id}}" class="text-center">
 								<td>{{$vehiculo->marca}}</td>
 								<td>{{$vehiculo->modelo}}</td>
-								<td>{{$vehiculo->anio}}</td>
-								<td><i class="fa fa-trash"></i></td>
+								<td>{{$vehiculo->placa}}</td>
+								<td>{{$vehiculo->anio}}
+								<td><i class="fa delete-vehicle-button fa-trash" data-toggle="modal" onclick="prepareDeleteVehicle({{$vehiculo->id}})" data-target="#confirmDeleteVehicle"></i></td>
 							</tr>
 						 @endforeach
+						 @endif
+						 <tr class="text-center">	
+								<td colspan="5"><small><a class="change-button" data-toggle="modal" data-target="#addVehicleModal">agregar nuevo veh&iacute;culo</a></small></td>
+							</tr>
 					  </table>
 						
 					</div>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 </section>
@@ -176,12 +187,128 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
     </div>
   </div>
 </div>
+<!-- Modal para agregar un vehiculo -->
+<div id="addVehicleModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Agregar veh&iacute;culo</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="/profile/vehicle/create" method="post">
+      	{{csrf_field()}}
+      	<div class="row">	
+			<div class="col-xs-6">	
+				<h5>Marca</h5>
+      			<input type="text" name="marca" class="form-control" >
+			</div>
+			<div class="col-xs-6">	
+				<h5>Modelo</h5>
+      			<input type="text" name="modelo" class="form-control" >
+			</div>
+      	</div>
+      	<div class="row">	
+			<div class="col-xs-6">	
+				<h5>Placa <small>no ser&aacute; mostrada publicamente</small></h5>
+      			<input type="text" name="placa" class="form-control" >
+			</div>
+			<div class="col-xs-6">	
+				<h5>Año</h5>
+      			<select name="anio" class="form-control">
+				@for($i=1985;$i<date('Y');$i++)
+					<option value="{{$i}}">{{$i}}</option>
+				@endfor
+				</select>
+			</div>
+      	</div>
+
+      </div>
+      <div class="modal-footer">
+      	<button type="submit" class="btn btn-default" >Agregar</button>
+      	</form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="confirmDeleteVehicle" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">¿Est&aacute;s seguro de querer eliminar este veh&iacute;culo?</h4>
+      </div>
+      
+      <div class="modal-footer text-center" style="text-align: center">
+ 
+      		{{csrf_field()}}
+      		<input type="hidden" id="viaje_id" name="viaje_id">
+      		 	<button type="submit" class="btn btn-default" onclick="deleteVehicle()" data-dismiss="modal">Eliminar</button>
+
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      	
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="cantDeleteVehicle" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">No puedes eliminar un veh&iacute;culo que ser&aacute; proximamente usado en un viaje. Deber&aacute;s cancelar el viaje para poder eliminar este veh&iacute;culo</h4>
+      </div>
+      
+      <div class="modal-footer text-center" style="text-align: center">
+
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      	
+      </div>
+    </div>
+
+  </div>
+</div>
 @endsection
 
 
 
 @section('additionalScript')
 <script>
+	var idVehicle=null;
+
+	function prepareDeleteVehicle(id){
+		idVehicle = id;
+	}
+
+	function deleteVehicle(){
+		$.ajax({
+		 		type: "POST",
+	            url: '/profile/vehicle/delete',
+	            data : {'vehiculo_id':idVehicle,'_token': $('input[name=_token]').val()},
+	            success: function (data) {
+	            	if(data == "true"){
+	            		$('#cantDeleteVehicle').modal('show');
+	            	}else{
+	            		$('#vehicleRowId-'+idVehicle).hide();
+	            	}
+	            },
+	            error: function (data) {
+	                console.log(data);
+	            }
+	        });
+	}
+
+
+
 	var inputs = document.querySelectorAll( '.inputfile' );
 	Array.prototype.forEach.call( inputs, function( input )
 	{

@@ -164,14 +164,25 @@
 			<div class="row">
 				<div class="col-xs-6">
 					<h5><strong>¿C&oacute;mo deseas recibir el pago?</strong></h5>				
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox1" name="efectivo" value="true" checked> Efectivo <i class="fa fa-money"></i>
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox2" name="pago_online" value="true" checked> Pago online <i class="fa fa-credit-card"></i>
-					</label>
 					
-					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-3">
+					<div class="funkyradio">
+						<div class="funkyradio-primary">
+				            <input type="checkbox"   name="efectivo" value="true" id="efectivo" checked/>
+            				<label for="efectivo"> Efectivo</label>
+				        </div>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<div class="funkyradio">
+						<div class="funkyradio-primary">
+				            <input type="checkbox"   name="pago_online" value="true" id="online" checked/>
+            				<label for="online"> Pago online</label>
+				        </div>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -290,19 +301,19 @@
 			<div class="row">
 				<div class="col-xs-4 text-center preference-container">
 					<span class="fa-stack fa-2x">
-					  <i class="fa fa-snowflake-o  fa-stack-1x"></i>
+					  <i class="fa fa-snowflake-o aire-icon  fa-stack-1x"></i>
 					  <i class="fa fa-ban air-ban fa-stack-2x  text-danger"></i>
 					</span>
 				</div>
 				<div class="col-xs-4 text-center preference-container">
 					<span class="fa-stack fa-2x">
-					  <i class="vs vs-smoking-alt  fa-stack-1x"></i>
+					  <i class="vs vs-smoking-alt fumar-icon  fa-stack-1x"></i>
 					  <i class="fa fa-ban smoke-ban fa-stack-2x  text-danger"></i>
 					</span>
 				</div>
 				<div class="col-xs-4 text-center preference-container">
 					<span class="fa-stack fa-2x">
-					  <i class="vs vs-drumstick  fa-stack-1x"></i>
+					  <i class="vs vs-drumstick  comida-icon fa-stack-1x"></i>
 					  <i class="fa fa-ban food-ban fa-stack-2x  text-danger"></i>
 					</span>
 				</div>
@@ -336,19 +347,19 @@
 						<div class="row">
 				<div class="col-xs-4 text-center preference-container">
 					<span class="fa-stack fa-2x">
-					  <i class="fa fa-music  fa-stack-1x"></i>
+					  <i class="fa fa-music musica-icon   fa-stack-1x"></i>
 					  <i class="fa fa-ban music-ban fa-stack-2x  text-danger"></i>
 					</span>
 				</div>
 				<div class="col-xs-4 text-center preference-container">
 					<span class="fa-stack fa-2x">
-					  <i class="fa fa-paw  fa-stack-1x"></i>
+					  <i class="fa fa-paw  mascotas-icon fa-stack-1x"></i>
 					  <i class="fa fa-ban pet-ban fa-stack-2x  text-danger"></i>
 					</span>
 				</div>
 				<div class="col-xs-4 text-center preference-container">
 					<span class="fa-stack fa-2x">
-					  <i class="vs vs-baby  fa-stack-1x"></i>
+					  <i class="vs vs-baby ninios-icon fa-stack-1x"></i>
 					  <i class="fa fa-ban baby-ban fa-stack-2x  text-danger"></i>
 					</span>
 				</div>

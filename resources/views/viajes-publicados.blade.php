@@ -182,7 +182,7 @@
 								<div class="col-xs-12">
 									<p>Informacion adicional:</p>
 									@if($viaje->informacion)
-										{{$viaje->informacion}}
+										<p><small><em>{{$viaje->informacion}}</em></small></p>
 									@else
 										<p><small><em>no agregaste informaci&oacute;n adicional</em></small></p>
 									@endif

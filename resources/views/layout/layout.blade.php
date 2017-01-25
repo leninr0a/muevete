@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="{{ URL::asset('css/checkboxes.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('css/vesper-icons.css')}}">
 	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
 	
 </head>
 <header class="header">

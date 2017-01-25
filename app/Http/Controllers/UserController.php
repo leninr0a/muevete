@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Vehiculo;
+use App\Viaje;
 use Validator;
 use Auth;
 
@@ -116,4 +118,41 @@ class UserController extends Controller
             return redirect('mi-cuenta/perfil')->with('status', 'Tu contraseña ha sido actualizada con éxito. La próxima vez que inicies sesión debes hacer usando tu nueva contraseña.');
         }
     }
+
+    public function createVehicle(){
+        $data = request()->all();
+        $this->validate(request(), [
+            'marca'         =>  ['required','string','min:2','max:10'],
+            'modelo'        =>  ['required','string','min:2','max:10'],
+            'placa'         =>  ['required','unique:vehiculos,placa','string','min:6','max:7'],
+            'anio'          =>  ['required','string'],
+        ]);
+
+        $vehiculo = new Vehiculo;
+        $vehiculo->marca = $data["marca"];
+        $vehiculo->modelo = $data["modelo"];
+        $vehiculo->placa = $data["placa"];
+        $vehiculo->anio = $data["anio"];
+        $vehiculo->user_id = Auth::user()->id;
+        $vehiculo->save();
+
+        return redirect('mi-cuenta/perfil')->with('status','Tu vehículo ha sido añadido éxitosamente');
+    }
+
+    public function deleteVehicle(){
+        if(request()->ajax()){
+            $data = request()->all();
+            //Verifico si no existe un viaje que use ese vehiculo
+            if(Viaje::where(['vehiculo_id'=>$data["vehiculo_id"],'user_id'=>Auth::user()->id])->count() > 0){
+                echo "true";
+            }else{
+                echo "false";
+                //Vehiculo::where(['id'=>$data["vehiculo_id"],'user_id'=>Auth::user()->id])->delete();
+            }
+            
+            die;
+        }
+    }
+
+
 }

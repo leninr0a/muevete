@@ -13,19 +13,25 @@
 		<div class="row first-row-travel-info">
 			<div class="col-xs-6">
 				<h3 class="text-center">Detalles del viaje</h3>
-				<h4 class="city-h3"><i class="glyphicon glyphicon-map-marker green"></i> <span id="salida">{{$viaje->salida}}</span></h4>
-				<h4 class="city-h3"><i class="glyphicon glyphicon-map-marker red"></i> <span id="llegada">{{$viaje->llegada}}</span></h4>
+				<p class="city-h3"><i class="glyphicon glyphicon-map-marker green"></i> <span id="salida">{{$viaje->salida}}</span></p>
+				<p class="city-h3"><i class="glyphicon glyphicon-map-marker red"></i> <span id="llegada">{{$viaje->llegada}}</span></p>
 				<input type="hidden" id="salidaLat" value={{$viaje->salidaLat}}>
 				<input type="hidden" id="salidaLng" value={{$viaje->salidaLng}}>
 				<input type="hidden" id="llegadaLat" value={{$viaje->llegadaLat}}>
 				<input type="hidden" id="llegadaLng" value={{$viaje->llegadaLng}}>
-				<h4><i class="fa fa-calendar-o"></i> {{$fecha = (new Carbon($viaje->fecha))->format('l jS \\of F Y')}}</h4>
-				<h4><i class="fa fa-clock-o"></i> Hora de salida: {{$viaje->hora}}</h4>
-				<h4><i class="fa fa-road"></i> Distancia: <span id="distancia-span"></span></h4>
-				<h4><i class="fa fa-hourglass-2"></i> Duraci&oacute;n estimada: <span id="duracion-span"></span></h4>
-				<h4><i class="fa fa-quote-left"></i> Informaci&oacute;n adicional:</h4>
+				<p><i class="fa fa-calendar-o"></i> {{$fecha = (new Carbon($viaje->fecha))->format('l jS \\of F Y')}}</p>
+				<p><i class="fa fa-clock-o"></i> Hora de salida: {{$viaje->hora}}</p>
+				<p><i class="fa fa-road"></i> Distancia: <span id="distancia-span"></span></p>
+				<p><i class="fa fa-hourglass-2"></i> Duraci&oacute;n estimada: <span id="duracion-span"></span></p>
+				<p><i class="fa fa-automobile"></i> Veh&iacute;culo: {{$viaje->vehiculo->marca}} {{$viaje->vehiculo->modelo}}, {{$viaje->vehiculo->anio}}</p>
+				<p><i class="fa fa-quote-left"></i> Informaci&oacute;n adicional:</p>
+				@if($viaje->informacion == "")
+				<p><em>El conductor no agreg&oacute; informaci&oacute;n adicional</em></p>
+				@else
 				<p>{{$viaje->informacion}}</p>
-				<h4 class="text-center price">{{$viaje->precio}} Bs</h4>
+				@endif
+
+				<h3 class="text-center price oswald">{{$viaje->precio}} <small>Bs</small></h3>
 				
 				
 
@@ -37,28 +43,118 @@
 		</div>
 
 		<div class="row">
-			<div class="col-xs-12 text-center">
-				<h3 class="text-center">Datos del conductor</h3>
-				<img src="{{URL::asset('images/profiles/'.$viaje->user->picture) }}" class="avatar-conductor" alt="">
-				<p class="text-center"><span id="nombre-conductor">{{$viaje->user->nombre}} {{$viaje->user->apellido}}</span>
-				<br>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star-o"></i>
+			<div class="col-xs-6">
+				<div class="row">
+						<div class="col-xs-4 text-center">
+						<span class="fa-stack fa-2x">
+							  <i class="fa fa-snowflake-o aire-icon fa-stack-1x"></i>
+							  @if(!$viaje->aire)
+							  <i class="fa fa-ban air-ban fa-stack-2x  text-danger"></i>
+							  @endif									
+						</span>
+							@if($viaje->aire)
+								<p>Llevo aire acondicionado</p>
+							@else
+								<p>No llevo aire acondicionado</p>
+							@endif
+						</div>
+						<div class="col-xs-4 text-center">
+							<span class="fa-stack fa-2x">
+								  <i class="vs vs-smoking-alt fumar-icon  fa-stack-1x"></i>
+								  @if(!$viaje->fumar)
+								  <i class="fa fa-ban smoke-ban fa-stack-2x  text-danger"></i>
+								  @endif
+							</span>	
+								@if($viaje->fumar)
+								<p>Se puede fumar en el auto</p>
+								@else
+								<p>No se puede fumar en el auto</p>
+								@endif					
+						</div>
+						<div class="col-xs-4 text-center">
+							<span class="fa-stack fa-2x">
+								  <i class="vs vs-drumstick comida-icon fa-stack-1x"></i>
+								  @if(!$viaje->comer)
+								  <i class="fa fa-ban food-ban fa-stack-2x  text-danger"></i>
+								  @endif
+							</span>	
+								@if($viaje->comer)
+								<p>Se puede comer en el auto</p>
+								@else
+								<p>No se puede comer en el auto</p>
+								@endif					
+						</div>
+						<div class="col-xs-4 text-center">
+							<span class="fa-stack fa-2x">
+								  <i class="fa fa-music musica-icon fa-stack-1x"></i>
+								  @if(!$viaje->musica)
+								  <i class="fa fa-ban ban-music fa-stack-2x  text-danger"></i>
+								  @endif
+							</span>	
+								@if($viaje->musica)
+								<p>Viajo con m&uacute;sica</p>
+								@else
+								<p>Viaje sin m&uacute;sica</p>
+								@endif					
+						</div>
+						<div class="col-xs-4 text-center">
+							<span class="fa-stack fa-2x">
+								  <i class="fa fa-paw mascotas-icon fa-stack-1x"></i>
+								  @if(!$viaje->macotas)
+								  <i class="fa fa-ban  fa-stack-2x  text-danger"></i>
+								  @endif
+							</span>	
+								@if($viaje->mascotas)
+								<p>Se permiten mascotas</p>
+								@else
+								<p>No se permiten mascotas</p>
+								@endif					
+						</div>
+						<div class="col-xs-4 text-center">
+								<span class="fa-stack fa-2x">
+								  <i class="vs vs-baby ninios-icon fa-stack-1x"></i>
+								  @if(!$viaje->ninios)
+								  <i class="fa fa-ban baby-ban fa-stack-2x  text-danger"></i>
+								  @endif
+								</span>	
+								@if($viaje->ninios)
+								<p>Se permiten niños</p>
+								@else
+								<p>No se permiten niños</p>
+								@endif					
+						</div>
+				</div>
+
+			</div>
+
+			<div class="col-xs-6">
+				<div class="row">
+				<div class="col-xs-6 text-right">
+					<img  src="{{URL::asset('images/profiles/'.$viaje->user->picture) }}" class="avatar-conductor" style="float:right" alt="">
+
+				</div>
+				<div class="col-xs-4 ">
+					<p class="text-center"><span id="nombre-conductor">{{$viaje->user->nombre}} {{$viaje->user->apellido}}</span>
 					<br>
-				<small>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star-o"></i>
+						<br>
+					<small>
 
-				@if($viaje->user->genero == 'M')
-					Hombre
-				@else
-					Mujer
-				@endif
-				<br>{{$edad = (new Carbon($viaje->user->fecha_nacimiento))->age}} años <br>
+					@if($viaje->user->genero == 'M')
+						Hombre
+					@else
+						Mujer
+					@endif
+					<br>{{$edad = (new Carbon($viaje->user->fecha_nacimiento))->age}} años <br>
 
-				</small>
-				</p>
+					</small>
+					</p>
+				</div>
+				</div>
 			</div>
 		
 		</div>

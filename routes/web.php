@@ -23,7 +23,8 @@ Route::post('/profile/update/picture','UserController@profilePicture');
 Route::post('/profile/update/phone','UserController@updatePhone');
 Route::post('/profile/update/email','UserController@updateEmail');
 Route::post('/profile/update/password','UserController@updatePassword');
-
+Route::post('/profile/vehicle/create','UserController@createVehicle');
+Route::post('/profile/vehicle/delete','UserController@deleteVehicle');
 
 Route::get('/como-funciona','MueveteController@comoFunciona');
 

@@ -23,7 +23,7 @@ class Viaje extends Model
     }
 
     public function vehiculo(){
-        return $this->hasOne(vehiculo::class);
+        return $this->belongsTo(Vehiculo::class);
     }
 
      protected static function boot() {

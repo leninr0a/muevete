@@ -5,12 +5,24 @@
 *{
 	font-family: 'Raleway';
 }
+
+.oswald{
+	font-family: 'Oswald';
+	text-transform: uppercase;
+	font-weight: bolder;
+}
+
 .header{
 	background:#2e9afe;
 }
 .menu{
 	list-style: none;
 }
+
+.delete-vehicle-button{
+	cursor:pointer;
+}
+
 
 .modal-footer{
 	border-top: none !important;
@@ -32,6 +44,37 @@
 .datepicker-publicar .datepicker-inline{
 	margin:0 auto;
 }
+
+
+.aire-icon{
+	color:#2ad1d1;
+}
+
+.musica-icon{
+	color:#d82e2e;
+}
+
+.fumar-icon{
+	color:gray;
+}
+
+.comida-icon{
+	color:#754b00;
+}
+
+.fa-ban{
+	color:rgba(46,154,254,0.74) !important;
+}
+
+.ninios-icon{
+	color:#ecc595;
+}
+
+.mascotas-icon{
+	color:#ad25da;
+}
+
+
 .menu li{
 	display:inline-block;
 	padding:0.5em 2em;
@@ -631,7 +674,7 @@ ul.dropdown-lr .input-group{
 }
 
 .container-profile{
-	
+	padding-bottom:4em;
 	background:#fff;
 }
 
