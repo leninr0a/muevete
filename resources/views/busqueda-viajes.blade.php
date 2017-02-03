@@ -112,9 +112,7 @@
             //document.getElementById('city2').value = place.name;
             //document.getElementById('cityLat').value = place.geometry.location.lat();
             //document.getElementById('cityLng').value = place.geometry.location.lng();
-            alert("This function is working!");
-            alert(place.name);
-            alert(place.geometry.location.lat());
+          
 
         	});
 		}

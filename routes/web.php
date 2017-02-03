@@ -23,6 +23,8 @@ Route::post('/profile/update/picture','UserController@profilePicture');
 Route::post('/profile/update/phone','UserController@updatePhone');
 Route::post('/profile/update/email','UserController@updateEmail');
 Route::post('/profile/update/password','UserController@updatePassword');
+Route::post('/profile/create/password','UserController@createPassword');
+Route::post('/profile/create/cedula','UserController@createCedula');
 Route::post('/profile/vehicle/create','UserController@createVehicle');
 Route::post('/profile/vehicle/delete','UserController@deleteVehicle');
 
@@ -58,3 +60,11 @@ Route::post('viajes/id/{id}/respuestas/delete','PreguntasController@deleteRespue
 Route::post('viajes/id/{id}/reservas/create','ReservasController@create')->where('id','[0-9]+');
 Route::post('mi-cuenta/reservas/aceptar','ReservasController@aceptar')->where('id','[0-9]+');
 Route::post('mi-cuenta/reservas/rechazar','ReservasController@rechazar')->where('id','[0-9]+');
+
+
+//Socialite
+Route::get('auth/facebook', 'Auth\RegisterController@redirectToProvider');
+Route::get('auth/facebook/callback', 'Auth\RegisterController@handleProviderCallback');
+
+//PerfilPublico
+Route::get('public/perfil/{id}','UserController@publicProfile')->where('id','[0-9]+');

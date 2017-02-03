@@ -100,7 +100,7 @@
 						<div class="col-xs-4 text-center">
 							<span class="fa-stack fa-2x">
 								  <i class="fa fa-paw mascotas-icon fa-stack-1x"></i>
-								  @if(!$viaje->macotas)
+								  @if(!$viaje->mascotas)
 								  <i class="fa fa-ban  fa-stack-2x  text-danger"></i>
 								  @endif
 							</span>	

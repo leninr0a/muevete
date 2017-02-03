@@ -10,6 +10,11 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
 	<div class="container container-profile well">
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-2">
+				@if(verifyFacebookNewAccount(Auth::user()) == STATUS_NEW_ACCOUNT[0])
+				<div class="alert alert-warning">
+					<p>Lamentamos notificar que no hemos podido recuperar todos tus datos desde Facebook. Te sugerimos actualizar tus datos faltantes en esta p&aacute;gina</p>
+				</div>
+				@endif
 				@include('partials.errors')
 				@if (session('status'))
 			    <div class="alert alert-success">
@@ -57,7 +62,12 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
 			<div class="col-xs-8 profile-col-right  ">
 				<h3>Informaci&oacute;n personal</h3>
 				<p><span class="black">Nombre:</span> {{Auth::user()->nombre}} {{Auth::user()->apellido}}</p>
-				<p><span class="black">C&eacute;dula:</span> {{Auth::user()->nacionalidad}}-{{Auth::user()->cedula}}</p>
+				<p><span class="black">C&eacute;dula:
+				@if(Auth::user()->cedula == null)
+				<small><a data-toggle="modal" class="change-button" data-target="#addCedulaModal">Agregar</a></small>
+				@else
+				</span> {{Auth::user()->nacionalidad}} - {{Auth::user()->cedula}}</p>
+				@endif
 				<p><span class="black">Edad:</span> {{$edad}} años</p> 
 				<p><span class="black">Sexo:</span> 
 				@if(Auth::user()->genero == 'M')
@@ -66,10 +76,23 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
 					{{'Femenino'}}
 				@endif
 				</p>
-				<p><span class="black">Tel&eacute;fono:</span> {{Auth::user()->telefono}} |  <small><a data-toggle="modal" class="change-button" data-target="#editPhoneModal">cambiar</a></small></p>
+				<p><span class="black">Tel&eacute;fono:</span> 
+				@if(Auth::user()->telefono == null)
+					<small><a data-toggle="modal" class="change-button" data-target="#editPhoneModal">Agregar</a></small>
+				@else
+				{{Auth::user()->telefono}}
+				|  <small><a data-toggle="modal" class="change-button" data-target="#editPhoneModal">cambiar</a></small>
+				@endif
+				</p>
 				<p><span class="black">Email:</span> {{Auth::user()->email}} |  <small><a data-toggle="modal"  class="change-button"data-target="#editEmailModal">cambiar</a></small></p>
 
-				<p><span class="black">Contrase&ntilde;a:</span> ******** |  <small><a data-toggle="modal" class="change-button" data-target="#editPasswordModal">cambiar</a></small></p>
+				<p><span class="black">
+				@if(Auth::user()->password == null)
+				Contrase&ntilde;a: <small><a data-toggle="modal" class="change-button" data-target="#createPasswordModal">Agregar</a></small>
+				@else
+				Contrase&ntilde;a:</span> ******** |  <small><a data-toggle="modal" class="change-button" data-target="#editPasswordModal">cambiar</a></small>
+				@endif
+				</p>
 				<p><span class="black">Reputaci&oacute;n:</span> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 0/5 - 0 calificaciones</p>
 				<div class="row">
 					<div class="col-xs-12">
@@ -160,6 +183,39 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
     </div>
   </div>
 </div>
+<!-- Modal para agregar una cedula -->
+<div id="addCedulaModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Agregar c&eacute;dula de identidad</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="/profile/create/cedula" method="post">
+      	{{csrf_field()}}
+        <p>Introduce tu n&uacute;mero de c&eacute;dula</p>
+        <div class="row">
+        <div class="col-xs-2">
+            <select name="nacionalidad" class="form-control">
+                <option value="V">V</option>
+                <option value="E">E</option>
+            </select>
+        </div>
+        <div class="col-xs-10">
+        	<input type="text"  pattern="[0-9]{6,}" name="cedula" class="form-control" value="{{ old('cedula') }}" placeholder="Ej: 1234567"required>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="submit" class="btn btn-default" >Agregar</button>
+      	</form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Modal para el cambio de password -->
 <div id="editPasswordModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -181,6 +237,32 @@ use Carbon\Carbon; $edad = (new Carbon(Auth::user()->fecha_nacimiento))->age;
       </div>
       <div class="modal-footer">
       	<button type="submit" class="btn btn-default" >Guardar</button>
+      	</form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal para crear un password -->
+<div id="createPasswordModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Creaci&oacute;n de contraseña</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="/profile/create/password" method="post">
+      	{{csrf_field()}}
+      	<input type="hidden" class="form-control" name="old_password">
+        <p>Introduce tu nueva contraseña</p>
+        <input type="password" class="form-control" name="password">
+        <p>Confirma tu contraseña</p>
+        <input type="password" class="form-control" name="password_confirmation">
+      </div>
+      <div class="modal-footer">
+      	<button type="submit" class="btn btn-default" >Crear</button>
       	</form>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
       </div>

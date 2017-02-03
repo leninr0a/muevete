@@ -91,12 +91,12 @@ class UserController extends Controller
         ]);
         $data=request()->all();
         User::where('id',Auth::user()->id)->update(['email'=>$data["email"]]);
-        return redirect('mi-cuenta/perfil')->with('status', 'Tu dirección de correo ha sido actualizado con éxito. La próxima vez que inicies sesión debes hacerlo usando tu nueva dirección.');
-       
+        return redirect('mi-cuenta/perfil')->with('status', 'Tu dirección de correo ha sido actualizado con éxito. La próxima vez que inicies sesión debes hacerlo usando tu nueva dirección.');       
     }
 
+    //Funcion para actualizar la contrase;a del usuario
     public function updatePassword(){
-
+        $data = request()->all();
         $rules = [
             'old_password'  => 'required|old_password:' . Auth::user()->password,
             'password'      =>  ['required','confirmed','min:7']
@@ -115,9 +115,59 @@ class UserController extends Controller
          if ($validator->fails()){
             return redirect('mi-cuenta/perfil')->withErrors($validator);
         }else{
+            User::where('id',Auth::user()->id)->update(['password'=>bcrypt($data["password"])]);
+            return redirect('mi-cuenta/perfil')->with('status', 'Tu contraseña ha sido actualizada con éxito. La próxima vez que inicies sesión debes hacer usando tu nueva contraseña.');
+
+        }
+    }
+
+
+    //Funcion para crear la contrase;a del usuario. Se utiliza cuando el usuario se conecta por facebook y posteriormente quiere crear una contrase;a para iniciar sesion sin usar facebook
+    public function createPassword(){
+        $data = request()->all();
+        $rules = [
+            'password'      =>  ['required','confirmed','min:7'],
+        ];
+        $messages = [
+            'password.required' => 'El campo contraseña no puede estar vacio',
+            'password.confirmed' => 'Las contraseñas ingresadas no coinciden',
+            'password.min' => 'La contraseña debe ser mayor a 7 caracteres',
+        ];
+        
+        $validator = Validator::make(request()->all(), $rules, $messages);
+
+      
+        if ($validator->fails()){
+            return redirect('mi-cuenta/perfil')->withErrors($validator);
+        }else{
+
+            User::where('id',Auth::user()->id)->update(['password'=>bcrypt($data["password"])]);
             return redirect('mi-cuenta/perfil')->with('status', 'Tu contraseña ha sido actualizada con éxito. La próxima vez que inicies sesión debes hacer usando tu nueva contraseña.');
         }
     }
+
+
+    public function createCedula(){
+        $data = request()->all();
+        $rules = [
+            'cedula'    => ['required','unique:users,cedula','numeric','min:6'],       
+            'nacionalidad'  =>  ['required','in:V,E']
+        ];
+        $messages=[
+            'cedula.requred' => 'Debe introducr un número de cédula válido',
+            'cedula.min'    =>  'Debe introducir un número de cédula válido',
+            'cedula.unique' =>  'Ya existe un usuario registrado con ese número de cédula. Si cree que está siendo víctima de suplantación de identidad por favor comuniquese en la brevedad posible',
+            'nacionalidad.in'   => 'La nacionalidad debe tener un valor válido'
+        ];
+        $validator = Validator::make(request()->all(), $rules, $messages);
+        if ($validator->fails()){
+            return redirect('mi-cuenta/perfil')->withErrors($validator);
+        }else{
+            User::where('id',Auth::user()->id)->update(['cedula'=>($data["cedula"]),'nacionalidad'=>$data["nacionalidad"]]);
+            return redirect('mi-cuenta/perfil')->with('status', 'Tu número de cédula de identidad ha sido actualizado con éxito');
+        }
+    }
+
 
     public function createVehicle(){
         $data = request()->all();
@@ -147,11 +197,16 @@ class UserController extends Controller
                 echo "true";
             }else{
                 echo "false";
-                //Vehiculo::where(['id'=>$data["vehiculo_id"],'user_id'=>Auth::user()->id])->delete();
+                Vehiculo::where(['id'=>$data["vehiculo_id"],'user_id'=>Auth::user()->id])->delete();
             }
             
             die;
         }
+    }
+
+    public function publicProfile($id = null){
+        $user = User::where('id',$id)->get()->first();
+        return view('public-profile')->with(compact('user'));
     }
 
 

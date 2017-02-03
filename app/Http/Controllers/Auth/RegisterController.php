@@ -6,7 +6,7 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use Socialite;
 class RegisterController extends Controller
 {
     /*
@@ -75,5 +75,66 @@ class RegisterController extends Controller
             'genero'       =>   $data['genero'],
             'nacionalidad' =>   $data['nacionalidad'],
         ]);
+    }
+
+     /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        try{
+            $socialUser = Socialite::driver('facebook')->user();
+
+        }catch(\Exception $e){
+            return redirect('/');
+        }
+
+        $user = User::where('email',$socialUser->email)->get()->first();
+
+        if(!$user){
+            $user = new User;
+            $user->nombre = $socialUser->user["first_name"];
+            $user->apellido = $socialUser->user["last_name"];
+            $user->email = $socialUser->user["email"];
+            $user->genero = $socialUser->user["gender"] == "female" ? "F" : "M";
+            $anio = date("Y") - $socialUser->age_range["min"];
+            $user->fecha_nacimiento = $anio."-01-01";
+            $user->facebook_id = $socialUser->id;
+            $arrContextOptions=array(
+            "ssl"=>array(
+            "verify_peer"=>false,
+            "verify_peer_name"=>false,
+            ),
+            );  
+            $url="http://graph.facebook.com/".$socialUser->id."/picture?type=large";
+            $data=file_get_contents($url, false, stream_context_create($arrContextOptions));
+            $fileName = $socialUser->id.'.jpg';
+            $file = fopen('images/profiles/'.$fileName, 'w+');
+            fputs($file, $data);
+            fclose($file);
+
+            $user->picture = $fileName;
+
+            $user->save();
+        }else if($user->facebook_id == null){
+            User::where('id',$user->id)->update(['facebook_id'=>$socialUser->id]);
+        }
+
+        auth()->login($user);
+
+        return redirect()->to('/');
+        
     }
 }

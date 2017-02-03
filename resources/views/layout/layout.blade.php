@@ -53,7 +53,7 @@
 		                          		<p class="text-center"><a href=""><small>¿Olvidaste tu contrase&ntilde;a?</small></a></p>
 		                          		<div class="col-xs-12 ">
 		                          				<hr>	
-		                          			<img src="{{URL::asset('images/btn_facebook.png')}}" class="img-responsive" alt="">
+		                          			<a href="{{ url('/auth/facebook')}}"><img src="{{URL::asset('images/btn_facebook.png')}}" class="img-responsive" alt=""></a>
 		                          		</div>
 		                          		
 		                          	</li>
@@ -65,10 +65,8 @@
                         	<li>Salir <i class="fa fa-close"></i>
 							<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}</form></li></a>
-                           
-                                        
-                                
-                        @endif
+							<a href="{{url('/')}}"><li><i class="fa fa-bell-o"></i> (0)</em></li></a>
+						@endif
 					</ul>
 				</div>
 			</div>
