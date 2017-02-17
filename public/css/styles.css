@@ -23,6 +23,9 @@
 	cursor:pointer;
 }
 
+.black{
+	color:#000;
+}
 
 .modal-footer{
 	border-top: none !important;
@@ -310,13 +313,13 @@
 	padding:4em 0;
 }
 
-.menu-link{
+.menu-link,.notification-link{
 	color:#fff;
 	text-decoration: none;
 
 }
 
-.menu-link:hover{
+.menu-link:hover,.notifiaction-link{
 	color:#fff;
 	text-decoration: none;
 	cursor: pointer;
@@ -349,6 +352,31 @@ form{
 	margin:0;
 }
 
+.dropdown-not{
+	color:#333;
+	width:35em;
+	overflow-x: hidden;
+	font-weight:ligther;
+	background:#e7edf2;
+	font-weight:lighter;
+}
+
+.notification-row{
+	background:rgba(255,255,255,0.36);
+	padding:0.5em;
+	margin:0;
+	border-top:1px dashed #eee;
+	padding:0.5em 3em ;
+}
+.notification-row:hover{
+	background:rgba(255,255,255,0.66);
+}
+
+.notification-see-all{
+	padding-top:0.5em;
+}
+
+
 /* Footer */
 footer{
 	position: absolute;
@@ -359,21 +387,17 @@ footer{
 	padding:1.5em 0;
 }
 /* General sizing */
-ul.dropdown-lr {
+ul.dropdown-lr{
   width: 250px;
-
-
 }
 
-.dropdown-lr hr{
+
+.dropdown-lr hr, .dropdown-not hr{
 	margin:5px 0;
 }
 
-ul.dropdown-lr li{
+ul.dropdown-lr li, ul.dropdown-not li{
 	font-weight:lighter;
-}
-ul.dropdown-lr li input{
-	
 }
 
 ul.dropdown-lr .input-group{
@@ -395,13 +419,12 @@ ul.dropdown-lr .input-group{
 
 
 
-
 /* mobile fix */
 @media (max-width: 768px) {
-	.dropdown-lr h3 {
+	.dropdown-lr h3 ,.dropdown-not h3{
 		color: #eee;
 	}
-	.dropdown-lr label {
+	.dropdown-lr label,.dropdown-not label {
 		color: #eee;
 	}
 }
@@ -678,6 +701,11 @@ ul.dropdown-lr .input-group{
 	background:#fff;
 }
 
+.container-public-profile{
+	padding:4em;
+	background:#fff;
+}
+
 .a-menu-profile,.a-menu-profile:active,.a-menu-profile:hover{
 	color:inherit;
 }
@@ -694,6 +722,10 @@ ul.dropdown-lr .input-group{
 
 .fa-star,.fa.fa-star-o{
 	color:orange;
+}
+
+.fa.fa-star-o.black,.fa.fa-star.black{
+	color:#000;
 }
 
 .alert-warning-mis-viajes{

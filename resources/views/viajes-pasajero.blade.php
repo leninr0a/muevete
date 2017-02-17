@@ -6,32 +6,7 @@
 	<div class="container container-profile well">
 		<div class="row">
 			<div class="col-xs-4 profile-col-left ">
-				<div class="row">
-					<div class="col-xs-12">
-						<img src="{{URL::asset('images/profiles/'.Auth::user()->picture)}}" class="profile-img" alt="">
-					</div>
-				</div>
-				<div class="row">
-					<div class="row">
-						<div class="col-xs-12 text-center">
-							<h3><strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong></h3>
-							
-						</div>
-					</div>
-					<a href="perfil" class="a-menu-profile">
-						<div class="col-xs-12 text-left menu-profile-option">
-							<p><i class="fa fa-address-card-o"></i> Informaci&oacute;n personal</p>
-						</div>
-					</a>
-					<div class="col-xs-12 text-left menu-profile-option menu-profile-option-active">
-						<p><i class="fa fa-car"></i> Viajes como pasajero</p>
-					</div>
-					<a class="a-menu-profile" href="mis-viajes-publicados">
-						<div class="col-xs-12 text-left menu-profile-option">
-							<p><i class="fa fa-car"></i> Viajes publicados</p>
-						</div>
-					</a>
-				</div>
+			@include('partials.profile-col')
 			</div>
 			@if(Auth::user()->reservas->count() == 0)
 			<div class="col-xs-8 profile-col-right  ">
@@ -119,7 +94,7 @@
 									<a href="{{url('viajes/id/'.$reserva->viaje->id)}}"><button class="btn-question">Ver publicaci&oacute;n</button></a>
 								</div>
 								<div class="col-xs-4 text-center">
-									<a href="{{url('viajes/id/'.$reserva->viaje->id)}}"><button class="btn-question">Eliminar reserva</button></a>
+									<a><button class="btn-question" data-toggle="modal" data-target="#cancelModal" onclick="prepareDeleteId('{{$reserva->estado}}',{{$reserva->id}})">Eliminar reserva</button></a>
 								</div>
 							</div>
 						</div>
@@ -130,4 +105,55 @@
 		</div>
 	</div>
 </section>
+
+
+<div id="cancelModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">¿Est&aacute;s seguro de querer eliminar tu reserva en este viaje?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert modal-warning"><span id="mensaje_estado"></span></div>
+      </div>
+      <div class="modal-footer text-center" style="text-align: center">
+      	<form action="{{ url('mi-cuenta/reservas/cancelar') }}" method="post">
+      		{{csrf_field()}}
+      		<input type="hidden" id="reserva_id" name="reserva_id">
+      		<button type="submit" class="btn-question">Eliminar</button>
+      		<button type="button" class="btn-cancelar" data-dismiss="modal">Cancelar</button>
+      	</form>
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+@endsection
+
+
+@section('additionalScript')
+<script>
+	function prepareDeleteId(estado,reserva_id){
+		if(estado == "aceptada"){
+			$('.modal-warning').removeClass("alert-info").addClass('alert-danger');
+			var mensaje = "Tu reserva ya fue aceptada, el conductor del viaje cuenta con tu presencia. Si cancelas el viaje, autom&aacute;ticamente recibiras una  calificaciones de cero estrellas y tu reputaci&oacute;n se ver&aacute; afectada negativamente";
+		}else{
+			$('.modal-warning').removeClass("alert-danger").addClass('alert-info');
+			var mensaje = "Tu solicitud de reserva aun no ha sido aprobada o rechaza por el conductor del viaje. ¿Realmente deseas cancelar tu solicitud?.";
+		}
+		$('#mensaje_estado').html(mensaje);
+		$('#reserva_id').val(reserva_id);
+	}
+	
+
+</script>
+
+
 @endsection

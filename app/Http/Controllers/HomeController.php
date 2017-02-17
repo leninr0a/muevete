@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Notifications\CalificationReceived;
 use App\Viaje;
 use App\Vehiculo;
-
+use App\Calification;
+use App\User;
+use App\Reserva;
+use App\Notifications\ViajeCancelado;
+use App\Notifications\SolicitudRespondida;
 
 class HomeController extends Controller
 {
@@ -129,11 +134,51 @@ class HomeController extends Controller
     public function deleteViaje(){
         $data = request()->all();
 
-        $viaje = Viaje::where('id',$data["viaje_id"])
-                            ->where('user_id',Auth::user()->id);
+        $viaje = Viaje::where(['id'=>$data["viaje_id"],'user_id'=>Auth::user()->id])->get()->first();
+
+        $this->notificarUsuarios($viaje);
         
-        $viaje->first()->delete();
+        Viaje::where(['id'=>$data["viaje_id"],'user_id'=>Auth::user()->id])->delete();
 
         return redirect('mi-cuenta/mis-viajes-publicados');
+    }
+
+    public function notificarUsuarios($viaje){
+        $reservas = Reserva::where(['viaje_id'=>$viaje->id])->get();
+        foreach($reservas as $reserva){
+            if($reserva->estado == "aceptada"){
+                $reserva->user->notify(new ViajeCancelado($viaje));
+            }else if($reserva->estado == "pendiente"){
+                $reserva->user->notify(new SolicitudRespondida($viaje,false));
+            }
+        }
+
+        Reserva::where(['viaje_id'=>$viaje->id])->delete();
+    }
+
+
+
+    public function calificacionesEnviadas(){
+        return view('calificaciones-enviadas');
+
+        /*        $calification = new Calification();
+        $calification->from = Auth::user()->id;
+        $calification->comentario = "Buen conductor";
+        $calification->calificacion = 5;
+        $calification->save();
+
+        $calification->to()->attach(3);
+*/
+        //print_r($calificaciones_sent);
+    }
+
+    public function calificacionesRecibidas(){
+        return view('calificaciones-recibidas');
+    }
+
+    public function notificaciones(){
+        $notificaciones = Auth::user()->notifications()->paginate(10);
+
+        return view('notificaciones')->with(compact('notificaciones'));
     }
 }

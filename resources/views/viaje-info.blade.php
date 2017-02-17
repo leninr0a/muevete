@@ -6,7 +6,7 @@
 
 <?php use Carbon\Carbon;
 	Carbon::setLocale('es');
- ?>
+?>
 
 <div class="content-viaje-info">
 		<div class="container container-viaje-info">
@@ -310,10 +310,9 @@
 							<div class="col-xs-11 col-xs-offset-1 reply-form" id="reply-form-{{$pregunta->id}}" style="display: none;">
 								<form action="{{$viaje->id}}/respuestas/create" method="post">
 									{{csrf_field()}}
-									<input type="hidden" name="viaje_id" value="{{$viaje->id}}">
-									<input type="hidden" name="user_id" value="{{$viaje->user->id}}">
-									<input type="hidden" name="pregunta_id" value="{{$pregunta->id}}">
 									<textarea class="form-control" name="respuesta" id="" cols="30" rows="3" placeholder="Escribe aqu&iacute; tu respuesta"></textarea>
+									<input type="hidden" name="viaje_id" value="{{$viaje->id}}">
+									<input  type="hidden" name="pregunta_id" value="{{$pregunta->id}}">
 									<button class="btn-question">Enviar</button>
 									<button class="btn-cancelar" type="button" onclick="openReplyForm({{$pregunta->id}})">Cancelar</button>
 								</form>

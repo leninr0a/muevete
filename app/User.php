@@ -47,4 +47,13 @@ class User extends Authenticatable
     public function vehiculos(){
         return $this->hasMany(Vehiculo::class);
     }
+
+    public function sent_califications(){
+        return $this->hasMany(Calification::class,'sender_id');
+    }
+
+    public function califications(){
+        return $this->hasMany(Calification::class,'receiver_id');
+    }
+
 }

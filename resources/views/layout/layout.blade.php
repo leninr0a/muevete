@@ -1,3 +1,7 @@
+<?php use Carbon\Carbon;
+	Carbon::setLocale('es');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +69,47 @@
                         	<li>Salir <i class="fa fa-close"></i>
 							<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}</form></li></a>
-							<a href="{{url('/')}}"><li><i class="fa fa-bell-o"></i> (0)</em></li></a>
+                            <li class="dropdown">
+							<a  class="dropdown-toggle menu-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> ({{Auth::user()->notifications->count()}})</a>
+							<div class="dropdown-menu dropdown-not animated flipInX" role="menu">
+		                    	<div class="row">
+			                    	<div class="col-xs-12 text-center">
+			                    		<p>Notificaciones</p>
+			                    	</div>
+			                    	@if(Auth::user()->unreadNotifications->count() == 0)
+										<div class="col-xs-12 notification-row">
+											<div class="row">
+												<div class="col-xs-8 col-xs-offset-2 text-center">
+													<p>No tienes ninguna notificaci&oacute;n</p>
+												</div>
+											</div>
+										</div>
+									@else
+				                    	@for($i = 0; $i< 3;$i++)
+				                    		@if($i < Auth::user()->notifications->count())
+										<div class="col-xs-12 notification-row">
+				                    		<div class="row">
+				                    			<div class="col-xs-3 ">
+				                    				<img src="{{URL::asset('images/profiles/'.Auth::user()->notifications[$i]->data['sender']['picture']) }}" class="avatar-questions"  alt="">
+				                    			</div>
+				                    			<div class="col-xs-7 text-left">
+				                    				<small>{{Auth::user()->notifications[$i]->data["message"]}}</small>
+				                    			</div>
+				                    			<div class="col-xs-2">
+				                    				<small>{{Auth::user()->notifications[$i]->created_at->diffForHumans()}}</small>
+				                    			</div>
+				                    		</div>
+				                    	</div>
+				                    		@endif
+				                    	@endfor
+				                    @endif	
+			                    	<div class="col-xs-12 text-center notification-see-all">
+			                    		<p><small><a class="change-button" href="{{url('mi-cuenta/notificaciones')}}">ver todas</a></small></p>
+			                    	</div>
+			                    <div>
+		                    	
+		                    </div>
+		                    </li>
 						@endif
 					</ul>
 				</div>

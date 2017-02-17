@@ -44,6 +44,9 @@ Route::post('eliminar/viaje','HomeController@deleteViaje');
 
 Route::get('mi-cuenta/mis-viajes-publicados','HomeController@viajesPublicados');
 Route::get('mi-cuenta/mis-viajes-pasajero','HomeController@viajesPasajero');
+Route::get('mi-cuenta/calificaciones-enviadas','HomeController@calificacionesEnviadas');
+Route::get('mi-cuenta/calificaciones-recibidas','HomeController@calificacionesRecibidas');
+Route::get('mi-cuenta/notificaciones','HomeController@notificaciones');
 
 Route::get('viajes/busqueda','MueveteController@buscarViaje');
 
@@ -60,7 +63,7 @@ Route::post('viajes/id/{id}/respuestas/delete','PreguntasController@deleteRespue
 Route::post('viajes/id/{id}/reservas/create','ReservasController@create')->where('id','[0-9]+');
 Route::post('mi-cuenta/reservas/aceptar','ReservasController@aceptar')->where('id','[0-9]+');
 Route::post('mi-cuenta/reservas/rechazar','ReservasController@rechazar')->where('id','[0-9]+');
-
+Route::post('mi-cuenta/reservas/cancelar','ReservasController@cancelar')->where('id','[0-9]+');
 
 //Socialite
 Route::get('auth/facebook', 'Auth\RegisterController@redirectToProvider');

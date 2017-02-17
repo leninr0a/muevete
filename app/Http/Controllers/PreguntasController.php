@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Pregunta;
 use App\Viaje;
 use App\Respuesta;
+use App\Notifications\QuestionAsked;
+use App\Notifications\QuestionAnswered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +30,7 @@ class PreguntasController extends Controller
     	$pregunta->save();
 
     	//Enviar la notificacion al conductor del viaje
-    	$this->enviarNotificacionConductor($data["viaje_id"]);
+    	$this->enviarNotificacionConductor($data["viaje_id"],Auth::user());
     	
     	//Redirige a la vista del viaje
     	return redirect('viajes/id/'.$data["viaje_id"]); 
@@ -46,11 +48,11 @@ class PreguntasController extends Controller
     	$respuesta = new Respuesta;
     	$respuesta->respuesta = $data["respuesta"];
     	$respuesta->viaje_id = $data["viaje_id"];
-    	$respuesta->user_id = $data["user_id"];
+    	$respuesta->user_id = Auth::user()->id;
     	$respuesta->pregunta_id = $data["pregunta_id"];
     	$respuesta->save();
 
-    	$this->enviarNotificacionUsuario($data["pregunta_id"]);
+    	$this->enviarNotificacionUsuario($data["pregunta_id"],Auth::user());
 
     	return redirect('viajes/id/'.$data["viaje_id"]);
     }
@@ -70,14 +72,14 @@ class PreguntasController extends Controller
     }
 
 
-    public function enviarNotificacionUsuario($pregunta_id){
-    	$pregunta = Pregunta::where('id',$pregunta_id)->get();
-    	//echo "enviar notificacion a el usuario que pregunto ".$pregunta[0]->user_id;
+    public function enviarNotificacionUsuario($pregunta_id,$sender){
+    	$receiver = Pregunta::where('id',$pregunta_id)->get()->first()->user;
+        $receiver->notify(new QuestionAnswered($sender));
     }
 
-    public function enviarNotificacionConductor($viaje_id){
-    	$viaje = Viaje::where('id',$viaje_id)->get();
-    	//echo "enviar notificacion a el conductor".$viaje[0]->user_id;
+    public function enviarNotificacionConductor($viaje_id,$sender){
+    	$conductor = Viaje::where('id',$viaje_id)->get()->first()->user;
+        $conductor->notify(new QuestionAsked($sender));
     }
     
 }

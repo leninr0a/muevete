@@ -7,34 +7,7 @@
 	<div class="container container-profile well">
 		<div class="row">
 			<div class="col-xs-4 profile-col-left ">
-				<div class="row">
-					<div class="col-xs-12">
-						<img src="{{URL::asset('images/profiles/'.Auth::user()->picture)}}" class="profile-img" alt="">
-					</div>
-				</div>
-				<div class="row">
-					<div class="row">
-						<div class="col-xs-12 text-center">
-							<h3><strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong></h3>
-							
-						</div>
-					</div>
-					<a href="perfil" class="a-menu-profile">
-						<div class="col-xs-12 text-left menu-profile-option">
-							<p><i class="fa fa-address-card-o"></i> Informaci&oacute;n personal</p>
-						</div>
-					</a>
-					<a href="mis-viajes-pasajero" class="a-menu-profile">
-						<div class="col-xs-12 text-left menu-profile-option ">
-							<p><i class="fa fa-car"></i> Viajes como pasajero</p>
-						</div>
-					</a>
-					<a class="a-menu-profile" href="/mi-cuenta/mis-viajes-publicados">
-						<div class="col-xs-12 text-left menu-profile-option menu-profile-option-active">
-							<p><i class="fa fa-car"></i> Viajes publicados</p>
-						</div>
-					</a>
-				</div>
+				@include('partials.profile-col')
 			</div>
 			<div class="col-xs-8 profile-col-right  ">
 			@if(Auth::user()->viajes->count() == 0)
@@ -95,11 +68,12 @@
 															<p>Tel&eacute;fono: {{$reserva->user->telefono}}</p>
 
 															</div>
+															<!-- 
 															<div class="col-xs-5 text-center">
 																
 																	<button class="btn-reject-request btn-reject-{{$reserva->id}}" onclick="rejectRequest({{$reserva->id}},{{$viaje->id}})">Rechazar <i class="fa fa-close"></i>
 																	</button>
-															</div>
+															</div> -->
 														</div>
 														<div class="row">
 															<div class="col-xs-12 text-right">
@@ -227,8 +201,9 @@
       		{{csrf_field()}}
       		<input type="hidden" id="viaje_id" name="viaje_id">
       		<button type="submit" class="btn-question">Eliminar</button>
+      		<button type="button" class="btn-cancelar" data-dismiss="modal">Cancelar</button>
       	</form>
-        <button type="button" class="btn-cancelar" data-dismiss="modal">Cancelar</button>
+        
       </div>
     </div>
 
@@ -240,10 +215,10 @@
 	<script>
 		function prepareDeleteId(viaje_id,asientos_reservados){
 			if(asientos_reservados > 0){
-				$('.modal-warning').removeClass( "alert-success").addClass('alert-danger');
+				$('.modal-warning').removeClass( "alert-info").addClass('alert-danger');
 				var mensaje = "Tienes <strong>"+asientos_reservados+"</strong> reservas para este viaje. Si cancelas el viaje, autom&aacute;ticamente recibiras <strong>"+asientos_reservados+"</strong> calificaciones de cero estrellas y tu reputaci&oacute;n se ver&aacute; afectada negativamente";
 			}else{
-				$('.modal-warning').removeClass( "alert-danger").addClass('alert-success');
+				$('.modal-warning').removeClass( "alert-danger").addClass('alert-info');
 				var mensaje = "Tienes 0 reservas de asiento en este viaje. Puedes cancelar el viaje y no recibir ning&uacute;n tipo de penalizaci&oacute;n.";
 			}
 			$('#asientos_reservados').html(mensaje);
@@ -259,6 +234,7 @@
 	            	$('.alert-warning-no-passangers-'+viaje_id).hide();
 	            	$('.warning-holder-aceptadas-'+viaje_id).prepend($('#alert-reserva-'+reserva_id));
 	            	$(".btn-accept-"+reserva_id).hide();
+	            	$(".btn-reject-"+reserva_id).hide();
 	            	if(data.reservas_pendientes == 0){
 	            	$(".warning-holder-"+viaje_id).prepend("<div class='alert alert-warning alert-warning-mis-viajes-none'><div class='row'><div class='col-xs-12'><p>No tienes solicitudes de reserva para  este viaje</p></div></div></div>");
 	            	}
